@@ -36,6 +36,9 @@ GEM
       execjs
     coffee-script-source (1.7.0)
     diff-lcs (1.2.5)
+    dotenv (0.10.0)
+    dotenv-rails (0.10.0)
+      dotenv (= 0.10.0)
     erubis (2.7.0)
     execjs (2.0.2)
     factory_girl (4.3.0)
@@ -125,6 +128,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  dotenv-rails
   factory_girl_rails
   faker
   jquery-rails

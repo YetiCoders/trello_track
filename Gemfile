@@ -24,6 +24,9 @@ gem 'jquery-rails'
 # Use puma as the app server
 gem 'puma', group: :development
 
+# Use dotenv for load secrets
+gem 'dotenv-rails', :groups => [:development, :test]
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'faker'
