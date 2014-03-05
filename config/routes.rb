@@ -54,5 +54,7 @@ TrelloTrack::Application.routes.draw do
   #     resources :products
   #   end
 
+  get :main, to: "home#main"
+
   root to: "home#index"
 end

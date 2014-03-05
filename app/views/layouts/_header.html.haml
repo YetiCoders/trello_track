@@ -1,3 +1,14 @@
+- if params[:action] != "index"
+  - content_for :user_menu do
+    %li.dropdown.user_link
+      = link_to "#", class: "dropdown-toggle", "data-toggle" => "dropdown" do
+        = image_tag "https://trello-avatars.s3.amazonaws.com/7a91fe997a5e759f670f6704206f6cb6/30.png"
+        Svetogor Malyugin
+
+      %ul.dropdown-menu.user_dropdown
+        %li= link_to t("common.pages.main"), "#"
+        %li= link_to t("common.sign_out"), "#"
+
 %nav#top_menu.navbar.navbar-default{ role: "navigation" }
   .navbar-header
     = link_to "/", title: t("common.application_name"), class: "navbar-brand" do
@@ -5,4 +16,7 @@
 
   .collapse.navbar-collapse
     %ul#user_menu.nav.navbar-nav.navbar-right
-      %li= link_to t("common.sign_in"), "#"
+      - if content_for :user_menu
+        = yield :user_menu
+      - else
+        %li= link_to t("common.sign_in"), "#"

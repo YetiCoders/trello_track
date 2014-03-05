@@ -23,3 +23,9 @@ en:
   common:
     application_name: TrelloTrack
     sign_in: Sign in via Trello
+    sign_out: Log out
+    pages:
+      main: Main page
+  home:
+    main:
+      my_organizations: My organizations
