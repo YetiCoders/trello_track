@@ -1,4 +1,9 @@
 TrelloTrack::Application.routes.draw do
+  get "/login" => "sessions#create", as: :login
+  get "/signout" => "sessions#destroy", as: :signout
+  get '/oauth/callback' => "sessions#auth"
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
