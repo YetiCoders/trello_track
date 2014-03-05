@@ -1,0 +1,16 @@
+.page_home
+  .login_form_block
+    .welcome
+      Welcome to
+      .center
+        = image_tag "logo_dark.png", title: t("common.application_name"), class: "welcome_logo"
+
+    .login_info
+      For start using service, please, login with your
+      = link_to "Trello", "https://trello.com", target: "_blank"
+      account.
+
+    .center
+      = link_to "#", class: "btn btn-primary login_button" do
+        .fa.fa-trello
+        = t "common.sign_in"

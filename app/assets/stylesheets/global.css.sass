@@ -1,0 +1,56 @@
+@import "_variables"
+@import "bootstrap"
+
+body,
+html
+  font:
+    family: "Helvetica Neue", Arial, Helvetica, sans-serif
+    size: 16px
+  background: $body_bg
+  color: $color_text
+  height: 100%
+
+#wrapper
+  min-height: 100%
+  margin:
+    bottom: -$footer_height
+  &:after
+    content: ""
+    display: block
+    height: $footer_height
+
+#content
+  padding: $wrapper_padding
+
+#header
+  a
+    color: #fff
+  height: 80px
+
+#top_menu
+  padding: $wrapper_padding
+  border: none
+  border-radius: 0
+  .navbar-brand
+    padding: 8px 0
+    img
+      height: 40px
+
+#footer
+  height: $footer_height
+  background: $body_bg
+  .footer_inner
+    padding: 20px 40px
+    .copy
+      margin-top: 20px
+      text-align: right
+      font-size: .75em
+      color: $color_text_light
+
+.btn
+  &.btn-primary
+    &:hover
+      background: $primary_button_bg_hover
+
+.center
+  text-align: center

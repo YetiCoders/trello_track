@@ -1,0 +1,6 @@
+.footer_inner
+  .copy
+    &copy;
+    = succeed "," do
+      %b= t "common.application_name"
+    = Date.today.year

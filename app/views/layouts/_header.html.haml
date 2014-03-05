@@ -1,0 +1,8 @@
+%nav#top_menu.navbar.navbar-default{ role: "navigation" }
+  .navbar-header
+    = link_to "/", title: t("common.application_name"), class: "navbar-brand" do
+      = image_tag "logo.png"
+
+  .collapse.navbar-collapse
+    %ul#user_menu.nav.navbar-nav.navbar-right
+      %li= link_to t("common.sign_in"), "#"
