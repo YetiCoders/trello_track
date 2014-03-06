@@ -8,5 +8,6 @@ class HomeController < ApplicationController
   end
 
   def main
+    @organizations = current_user.organizations
   end
 end

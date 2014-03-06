@@ -12,97 +12,15 @@
           = t(".set_up_following")
 
     .organizations
-      .row
-        .organization.col-md-4
-          %h4 Organization #1
+      - @organizations.each_slice(3) do |organizations|
+        .row
+          - organizations.each do |organization|
+            .organization.col-md-4
+              %h4= organization.display_name
 
-          .members
-            .member.clearfix
-              .follow_status.pull-left
-                .fa.fa-eye
-              .avatar.pull-left
-                = image_tag "https://trello-avatars.s3.amazonaws.com/7a91fe997a5e759f670f6704206f6cb6/170.png"
-              .name
-                = link_to "Svetogor Malyugin", "#"
-
-            .member.clearfix
-              .follow_status.pull-left
-                .fa.fa-eye
-              .avatar.pull-left
-                = image_tag "https://trello-avatars.s3.amazonaws.com/7a91fe997a5e759f670f6704206f6cb6/170.png"
-              .name
-                = link_to "Svetogor Malyugin", "#"
-
-            .member.clearfix
-              .follow_status.pull-left
-              .avatar.pull-left
-                = image_tag "https://trello-avatars.s3.amazonaws.com/7a91fe997a5e759f670f6704206f6cb6/170.png"
-              .name
-                = link_to "Svetogor Malyugin", "#"
-
-            .member.clearfix
-              .follow_status.pull-left
-                .fa.fa-eye
-              .avatar.pull-left
-                = image_tag "https://trello-avatars.s3.amazonaws.com/7a91fe997a5e759f670f6704206f6cb6/170.png"
-              .name
-                = link_to "Svetogor Malyugin", "#"
-
-        .organization.col-md-4
-          %h4 Another Organization
-
-          .members
-            .member.clearfix
-              .follow_status.pull-left
-              .avatar.pull-left
-                = image_tag "https://trello-avatars.s3.amazonaws.com/7a91fe997a5e759f670f6704206f6cb6/170.png"
-              .name
-                = link_to "Svetogor Malyugin", "#"
-
-            .member.clearfix
-              .follow_status.pull-left
-              .avatar.pull-left
-                = image_tag "https://trello-avatars.s3.amazonaws.com/7a91fe997a5e759f670f6704206f6cb6/170.png"
-              .name
-                = link_to "Svetogor Malyugin", "#"
-
-            .member.clearfix
-              .follow_status.pull-left
-              .avatar.pull-left
-                = image_tag "https://trello-avatars.s3.amazonaws.com/7a91fe997a5e759f670f6704206f6cb6/170.png"
-              .name
-                = link_to "Svetogor Malyugin", "#"
-
-            .member.clearfix
-              .follow_status.pull-left
-                .fa.fa-eye
-              .avatar.pull-left
-                = image_tag "https://trello-avatars.s3.amazonaws.com/7a91fe997a5e759f670f6704206f6cb6/170.png"
-              .name
-                = link_to "Svetogor Malyugin", "#"
-
-            .member.clearfix
-              .follow_status.pull-left
-              .avatar.pull-left
-                = image_tag "https://trello-avatars.s3.amazonaws.com/7a91fe997a5e759f670f6704206f6cb6/170.png"
-              .name
-                = link_to "Svetogor Malyugin", "#"
-
-        .organization.col-md-4
-          %h4 Third Organization
-
-          .members
-            .member.clearfix
-              .follow_status.pull-left
-              .avatar.pull-left
-                = image_tag "https://trello-avatars.s3.amazonaws.com/7a91fe997a5e759f670f6704206f6cb6/170.png"
-              .name
-                = link_to "Svetogor Malyugin", "#"
-
-            .member.clearfix
-              .follow_status.pull-left
-                .fa.fa-eye
-              .avatar.pull-left
-                = image_tag "https://trello-avatars.s3.amazonaws.com/7a91fe997a5e759f670f6704206f6cb6/170.png"
-              .name
-                = link_to "Svetogor Malyugin", "#"
+              .members
+                - organization.members.each do |member|
+                  .member.clearfix
+                    .follow_status.pull-left
+                      .fa.fa-eye
+                    = username_with_avatar(member)
