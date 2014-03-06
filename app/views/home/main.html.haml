@@ -7,10 +7,15 @@
           = t ".my_organizations"
 
       .pull-right
-        = link_to "#", class: "btn btn-primary" do
+        = link_to "#", class: "btn btn-primary set_up_following_button" do
           .fa.fa-cog
-          = t(".set_up_following")
+          = t ".set_up_following"
 
+        = link_to js_void, class: "btn btn-primary finish_set_up_following_button" do
+          .fa.fa-check
+          = t ".finish_set_up_following"
+
+  .content_block.white_bg
     .organizations
       - @organizations.each_slice(3) do |organizations|
         .row
@@ -22,5 +27,11 @@
                 - organization.members.each do |member|
                   .member.clearfix
                     .follow_status.pull-left
-                      .fa.fa-eye
-                    = username_with_avatar(member)
+                      .status_icon.fa.fa-eye
+                      = check_box_tag "following_member[]", member.id, true, class: "status_checkbox"
+
+                    .avatar.pull-left
+                      = image_tag member.avatar_url({ size: :small })
+
+                    .name
+                      = link_to member.full_name, "/activity/#{member.id}"

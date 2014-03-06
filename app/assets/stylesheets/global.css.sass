@@ -21,13 +21,20 @@ html
 
 #content
   .content_block
-    padding: $wrapper_padding
+    padding:
+      left: $wrapper_padding
+      right: $wrapper_padding
+      bottom: 20px
+    &.white_bg
+      background: $color_white
 
 #header
   height: 80px
 
 #top_menu
-  padding: $wrapper_padding
+  padding:
+    left: $wrapper_padding
+    right: $wrapper_padding
   border: none
   border-radius: 0
   a
@@ -56,7 +63,7 @@ html
   height: $footer_height
   background: $body_bg
   .footer_inner
-    padding: 20px 40px
+    padding: 20px $wrapper_padding
     .copy
       margin-top: 20px
       text-align: right

@@ -29,3 +29,5 @@ en:
   home:
     main:
       my_organizations: My organizations
+      set_up_following: Set up following
+      stop_set_up_following: Finish set up

@@ -8,6 +8,6 @@ class HomeController < ApplicationController
   end
 
   def main
-    @organizations = current_user.organizations
+    @organizations = current_user.organizations.sort_by &:display_name
   end
 end
