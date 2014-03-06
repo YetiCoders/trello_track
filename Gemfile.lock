@@ -1,3 +1,14 @@
+GIT
+  remote: git://github.com/eagleas/ruby-trello.git
+  revision: 43521b63afebe82f0fbd4c15ab2beff0008b1ee2
+  specs:
+    ruby-trello (1.1.0)
+      activemodel
+      addressable (~> 2.3)
+      json
+      oauth (~> 0.4.5)
+      rest-client (~> 1.6.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -67,7 +78,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     minitest (4.7.5)
-    multi_json (1.8.4)
+    multi_json (1.9.0)
     oauth (0.4.7)
     pg (0.17.0)
     polyglot (0.3.4)
@@ -109,12 +120,6 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
-    ruby-trello (1.0.4)
-      activemodel
-      addressable (~> 2.3)
-      json
-      oauth (~> 0.4.5)
-      rest-client (~> 1.6.7)
     sass (3.2.14)
     sass-rails (4.0.1)
       railties (>= 4.0.0, < 5.0)
@@ -161,7 +166,7 @@ DEPENDENCIES
   rails (= 4.0.2)
   rails_12factor
   rspec-rails
-  ruby-trello
+  ruby-trello!
   sass-rails (~> 4.0.0)
   therubyracer
   uglifier (>= 1.3.0)
