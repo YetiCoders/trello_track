@@ -35,4 +35,4 @@
                         = user_avatar(member, :medium)
 
                       .name
-                        = link_to member.full_name, "/activity/#{member.id}"
+                        = link_to member.full_name, member_path(member)
