@@ -1,8 +1,9 @@
 class SessionsController < ApplicationController
+  skip_before_filter :check_current_user
 
   def create
     begin
-      me = get_client.find(:member, 'me')
+      _client.find(:member, 'me')
     rescue NoMethodError
       return
     end
@@ -12,22 +13,33 @@ class SessionsController < ApplicationController
 
   def auth
     rt = session[:request_token]
+    at = rt.get_access_token oauth_verifier: params[:oauth_verifier]
+    _client.auth_policy.token = Trello::Authorization::OAuthCredential.new at.token, nil
 
-    at = rt.get_access_token :oauth_verifier => params[:oauth_verifier]
-    get_client.auth_policy.token = Trello::Authorization::OAuthCredential.new at.token, nil
+    member = _client.find(:member, 'me')
+    user = User.find_or_initialize_by(uid: member.id)
+    user.name = member.username
+    user.oauth_token = at.params[:oauth_token]
+    user.oauth_token_secret = at.params[:oauth_token_secret]
 
-    redirect_to root_url #URI::decode(params[:return])
+    if user.save
+      session[:user_id] = user.id
+      session[:token] = user.oauth_token
+    end
+
+    redirect_to root_url
   end
 
   def destroy
-    session[:client] = nil
-    redirect_to root_url, notice: "Signed out!"
+    session[:user_id] = nil
+    session[:token] = nil
+    redirect_to root_url
   end
 
   private
 
-  def get_client
-    Trello::Client.new(
+  def _client
+    @client ||= Trello::Client.new(
       consumer_key: ENV['CONSUMER_KEY'],
       consumer_secret: ENV['CONSUMER_SECRET'],
       return_url: oauth_callback_url,
@@ -37,5 +49,4 @@ class SessionsController < ApplicationController
       }
     )
   end
-
 end
