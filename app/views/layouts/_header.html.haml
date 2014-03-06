@@ -3,11 +3,11 @@
     %li.dropdown.user_link
       = link_to "#", class: "dropdown-toggle", "data-toggle" => "dropdown" do
         = image_tag "https://trello-avatars.s3.amazonaws.com/7a91fe997a5e759f670f6704206f6cb6/30.png"
-        Svetogor Malyugin
+        = current_user.username
 
       %ul.dropdown-menu.user_dropdown
-        %li= link_to t("common.pages.main"), "#"
-        %li= link_to t("common.sign_out"), "#"
+        %li= link_to t("common.pages.main"), main_url
+        %li= link_to t("common.sign_out"), logout_url
 
 %nav#top_menu.navbar.navbar-default{ role: "navigation" }
   .navbar-header

@@ -1,6 +1,6 @@
 TrelloTrack::Application.routes.draw do
-  get "/login" => "sessions#create", as: :login
-  get "/signout" => "sessions#destroy", as: :signout
+  get "/signin" => "sessions#create", as: :login
+  get "/signout" => "sessions#destroy", as: :logout
   get '/oauth/callback' => "sessions#auth"
 
 
