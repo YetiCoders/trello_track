@@ -24,14 +24,14 @@
               %h4= organization.display_name
 
               .members
-                - organization.members.each do |member|
+                - @members[organization.id].each do |member|
                   .member.clearfix
                     .follow_status.pull-left
                       .status_icon.fa.fa-eye
                       = check_box_tag "following_member[]", member.id, true, class: "status_checkbox"
 
                     .avatar.pull-left
-                      = image_tag member.avatar_url({ size: :small })
+                      = image_tag member.avatar_url
 
                     .name
                       = link_to member.full_name, "/activity/#{member.id}"

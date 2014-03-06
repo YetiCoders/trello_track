@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/eagleas/ruby-trello.git
-  revision: 43521b63afebe82f0fbd4c15ab2beff0008b1ee2
+  revision: 32b602aaf8f7e9853be6373fde6de10ff6704db8
   specs:
     ruby-trello (1.1.0)
       activemodel

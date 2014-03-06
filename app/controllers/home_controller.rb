@@ -9,5 +9,9 @@ class HomeController < ApplicationController
 
   def main
     @organizations = current_user.organizations.sort_by &:display_name
+    @members = {}
+    @organizations.each do |organization|
+      @members[organization.id] = organization.members({ fields: ['fullName', 'username', 'avatarHash'] })
+    end
   end
 end
