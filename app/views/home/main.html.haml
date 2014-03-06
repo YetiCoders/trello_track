@@ -17,21 +17,22 @@
 
   .content_block.white_bg
     .organizations
-      - @organizations.each_slice(3) do |organizations|
-        .row
-          - organizations.each do |organization|
-            .organization.col-md-4
-              %h4= organization.display_name
+      = form_tag "follow", remote: true do |f|
+        - @organizations.each_slice(3) do |organizations|
+          .row
+            - organizations.each do |organization|
+              .organization.col-md-4
+                %h4= organization.display_name
 
-              .members
-                - @members[organization.id].each do |member|
-                  .member.clearfix
-                    .follow_status.pull-left
-                      .status_icon.fa.fa-eye
-                      = check_box_tag "following_member[]", member.id, true, class: "status_checkbox"
+                .members
+                  - @members[organization.id].each do |member|
+                    .member.clearfix
+                      .follow_status.pull-left
+                        .status_icon.fa.fa-eye
+                        = check_box_tag "following_member[]", member.id, true, class: "status_checkbox"
 
-                    .avatar.pull-left
-                      = image_tag member.avatar_url
+                      .avatar.pull-left
+                        = image_tag member.avatar_url
 
-                    .name
-                      = link_to member.full_name, "/activity/#{member.id}"
+                      .name
+                        = link_to member.full_name, "/activity/#{member.id}"
