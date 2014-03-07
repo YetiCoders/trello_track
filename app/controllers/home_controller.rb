@@ -1,12 +1,12 @@
 class HomeController < ApplicationController
-  skip_before_filter :check_trello_user, only: :index
+  skip_before_filter :authenticate, only: :index
 
   def index
     redirect_to main_url if trello_user
   end
 
   def main
-    @organizations = trello_user.organizations.sort_by &:display_name
+    @organizations = trello_user.organizations.sort_by(&:display_name)
     @members = {}
 
     @organizations.each do |organization|

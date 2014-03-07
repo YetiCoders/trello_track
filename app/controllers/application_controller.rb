@@ -3,31 +3,26 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   helper_method :trello_user, :system_user
-  before_filter :check_trello_user
+  before_filter :authenticate
 
   private
 
   def trello_user
-    if !@trello_user && session[:user_id]
-      user = User.where(id: session[:user_id], oauth_token: session[:token]).first
-      if user
-        @trello_user = Trello::Client.new(
-          consumer_key: ENV['CONSUMER_KEY'],
-          consumer_secret: ENV['CONSUMER_SECRET'],
-          oauth_token: user.oauth_token,
-          oauth_token_secret: user.oauth_token_secret
-        ).find(:member, 'me')
-      end
+    @trello_user ||= begin
+      Trello::Client.new(
+        consumer_key: ENV['CONSUMER_KEY'],
+        consumer_secret: ENV['CONSUMER_SECRET'],
+        oauth_token: system_user.oauth_token,
+        oauth_token_secret: system_user.oauth_token_secret
+      ).find(:member, 'me') if system_user
     end
-
-    @trello_user
   end
 
   def system_user
-    @system_user ||= User.where(uid: trello_user.id).first
+    @system_user ||= User.where(id: session[:user_id], oauth_token: session[:token]).try(:first)
   end
 
-  def check_trello_user
-    redirect_to root_url unless trello_user
+  def authenticate
+    redirect_to root_url unless system_user
   end
 end
