@@ -31,3 +31,7 @@ en:
       my_organizations: My organizations
       set_up_following: Set up following
       stop_set_up_following: Finish set up
+  members:
+    show:
+      recent_activity: Recent Activity (last 24 hours)
+      active_cards: Active cards

@@ -1,0 +1,33 @@
+.page_member
+  .content_block
+    %ul.nav.nav-tabs.members_tabs
+      %li.active
+        = link_to member_path("516fca9a609206fb37005a2f") do
+          = user_avatar(current_user, :small)
+          = current_user.full_name.split.first
+      %li
+        = link_to member_path("516fca9a609206fb37005a2f") do
+          = user_avatar(current_user, :small)
+          = current_user.full_name.split.first
+      %li
+        = link_to member_path("516fca9a609206fb37005a2f") do
+          = user_avatar(current_user, :small)
+          = current_user.full_name.split.first
+
+  .content_block.white_bg
+    .member_info
+      .avatar= user_avatar(current_user, :normal)
+      .name= current_user.full_name
+
+    .row
+      .col-md-6
+        %h4= t ".recent_activity"
+
+        #recent_activity
+          = render "activity"
+
+      .col-md-6
+        %h4= t ".active_cards"
+
+        #active_cards
+          = render "cards"

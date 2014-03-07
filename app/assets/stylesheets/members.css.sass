@@ -1,0 +1,92 @@
+@import "_variables"
+
+.page_member
+  .members_tabs
+    border:
+      color: transparent
+    li
+      margin:
+        right: 10px
+      a
+        background: #ebf0f3
+        border: none
+        color: $color_text
+        &:hover
+          border: none
+      &.active
+        a
+          background: $color_white
+          cursor: pointer
+  .member_info
+    padding: 20px 0
+    .avatar
+      float: left
+      margin:
+        right: 10px
+      img
+        width: 50px
+        height: 50px
+    .name
+      font:
+        size: 1.6em
+      line:
+        height: 50px
+  .activities
+    overflow-y: auto
+    margin: 40px 0
+    .activity
+      border:
+        top: 2px solid $color_light_gray
+      padding:
+        top: 10px
+      margin:
+        bottom: 40px
+      .date
+        color: $color_text_light
+        font-size: .85em
+  .cards
+    margin: 40px 0
+    .card
+      float: left
+      width: $card_width
+      margin:
+        right: 20px
+        bottom: 20px
+      border: 1px solid $color_light_gray
+      border-bottom-width: 2px
+      border-radius: 10px
+      cursor: pointer
+      .card_inner
+        margin: 10px 20px
+        .name
+          font-size: 1.3em
+        .board_and_column
+          font-size: .85em
+          color: $color_text_light
+        .info
+          margin:
+            top: 10px
+          .details
+            margin:
+              bottom: 10px
+            .detail
+              color: $color_text_light
+              font-size: .85em
+              float: left
+              margin:
+                right: 10px
+              &.checklist
+                padding: 0 5px
+                border-radius: 4px
+                &.done
+                  background: $color_green
+                  color: $color_white
+          .assigned_members
+            margin:
+              bottom: 10px
+            img
+              margin:
+                left: 5px
+        .date
+          font-size: .85em
+          color: $color_text_light

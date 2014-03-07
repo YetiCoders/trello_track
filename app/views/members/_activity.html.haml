@@ -1,0 +1,10 @@
+.activities
+  - 100.times do |i|
+    .activity
+      .text
+        Moved card
+        %b "Update mock-ups"
+        from "Doing" to "Done"
+      .date
+        = Time.now.strftime "%b %d at %H:%M"
+        on board "My Board"
