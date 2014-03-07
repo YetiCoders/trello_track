@@ -41,7 +41,7 @@ en:
         addAttachmentToCard:
         addChecklistToCard:
         addMemberToBoard:
-        addMemberToCard: Add %{user} to the card %{card}
+        addMemberToCard: Added %{user} to the card %{card}
         addMemberToOrganization:
         addToOrganizationBoard:
         commentCard:
@@ -52,7 +52,7 @@ en:
         createCard:
         copyCard:
         createList:
-        createOrganization: Organization %{name} created
+        createOrganization: Organization %{orgname} created
         deleteAttachmentFromCard:
         deleteBoardInvitation:
         deleteCard:
