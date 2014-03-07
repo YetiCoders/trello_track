@@ -10,10 +10,7 @@ class MembersController < ApplicationController
     end
     @members.sort_by!(&:full_name)
 
-    @member = trello_user.client.find(:member, params[:id])
-#    Rails.logger.info "=========== #{1.day.ago.to_json}"
-    @actions = @member.actions #:since => 1.day.ago.to_json
-#    Rails.logger.info "=========== #{@actions.count}"
+    @actions = @current_member.actions :since => Date.yesterday.to_json
   end
 
   def follow

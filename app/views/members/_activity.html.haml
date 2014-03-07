@@ -1,10 +1,9 @@
 .activities
-  - 100.times do |i|
+  - @actions.map(&:attributes).each do |a|
     .activity
       .text
-        Moved card
-        %b "Update mock-ups"
-        from "Doing" to "Done"
+        = raw action_describe(a)
       .date
-        = Time.now.strftime "%b %d at %H:%M"
-        on board "My Board"
+        = a[:date].strftime "%b %d at %H:%M"
+        - if a[:data]["board"]
+          = t('.on_board', board: a[:data]["board"]["name"])
