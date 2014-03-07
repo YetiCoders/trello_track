@@ -1,0 +1,16 @@
+.member_info
+  .avatar= user_avatar(@current_member, :medium)
+  .name= @current_member.full_name
+
+.row
+  .col-md-6
+    %h4= t ".recent_activity"
+
+    #recent_activity
+      = render "activity"
+
+  .col-md-6
+    %h4= t ".active_cards"
+
+    #active_cards
+      = render "cards"

@@ -11,24 +11,10 @@
 
       - @members.each do |member|
         %li{ class: ("active" if member.id == @current_member.id) }
-          = link_to member_path(member.id), title: member.full_name do
+          = link_to member_path(member.id), title: member.full_name, remote: true do
             = user_avatar(member, :small)
             = member.full_name.split.first
 
   .content_block.white_bg
-    .member_info
-      .avatar= user_avatar(@member, :normal)
-      .name= @member.full_name
-
-    .row
-      .col-md-6
-        %h4= t ".recent_activity"
-
-        #recent_activity
-          = render "activity"
-
-      .col-md-6
-        %h4= t ".active_cards"
-
-        #active_cards
-          = render "cards"
+    #tab_content
+      = render 'tab'

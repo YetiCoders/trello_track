@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   helper_method :trello_user, :system_user
   before_filter :authenticate
 
+  include ApplicationHelper
+
   private
 
   def trello_user

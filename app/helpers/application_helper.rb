@@ -1,6 +1,22 @@
 module ApplicationHelper
+  include ActionView::Helpers::JavaScriptHelper
+
   def js_void
     return "javascript:void(0);"
+  end
+
+  def js_html(selector, *options)
+    if options.first.is_a?(Hash)
+      js_action = options.first.delete(:js_action) || "html"
+    end
+
+    js_action ||= "html"
+
+    text = options.first.is_a?(Hash) ? render_to_string(*options) : options.first
+
+    <<JS
+$('#{selector}').#{js_action}('#{escape_javascript(text)}');
+JS
   end
 
   def user_avatar(member, size = :small)
