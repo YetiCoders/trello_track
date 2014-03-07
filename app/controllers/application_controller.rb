@@ -8,10 +8,10 @@ class ApplicationController < ActionController::Base
   private
 
   def trello_user
-    if session[:user_id]
+    if !@trello_user && session[:user_id]
       user = User.where(id: session[:user_id], oauth_token: session[:token]).first
       if user
-        @trello_user ||= Trello::Client.new(
+        @trello_user = Trello::Client.new(
           consumer_key: ENV['CONSUMER_KEY'],
           consumer_secret: ENV['CONSUMER_SECRET'],
           oauth_token: user.oauth_token,
@@ -19,6 +19,8 @@ class ApplicationController < ActionController::Base
         ).find(:member, 'me')
       end
     end
+
+    @trello_user
   end
 
   def system_user
