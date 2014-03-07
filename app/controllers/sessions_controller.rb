@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_filter :check_current_user
+  skip_before_filter :check_trello_user
 
   def create
     begin

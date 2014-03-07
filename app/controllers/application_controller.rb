@@ -2,16 +2,16 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  helper_method :current_user, :system_user
-  before_filter :current_user, :check_current_user
+  helper_method :trello_user, :system_user
+  before_filter :check_trello_user
 
   private
 
-  def current_user
+  def trello_user
     if session[:user_id]
       user = User.where(id: session[:user_id], oauth_token: session[:token]).first
       if user
-        @current_user ||= Trello::Client.new(
+        @trello_user ||= Trello::Client.new(
           consumer_key: ENV['CONSUMER_KEY'],
           consumer_secret: ENV['CONSUMER_SECRET'],
           oauth_token: user.oauth_token,
@@ -22,12 +22,10 @@ class ApplicationController < ActionController::Base
   end
 
   def system_user
-    @system_user ||= User.where(uid: current_user.id).first
+    @system_user ||= User.where(uid: trello_user.id).first
   end
 
-  def check_current_user
-    unless current_user
-      redirect_to root_url
-    end
+  def check_trello_user
+    redirect_to root_url unless trello_user
   end
 end

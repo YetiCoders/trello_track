@@ -2,8 +2,8 @@
   - content_for :user_menu do
     %li.dropdown.user_link
       = link_to "#", class: "dropdown-toggle", "data-toggle" => "dropdown" do
-        = user_avatar(current_user, :small)
-        = current_user.full_name
+        = user_avatar(trello_user, :small)
+        = trello_user.full_name
 
       %ul.dropdown-menu.user_dropdown
         %li= link_to t("common.pages.main"), main_url
