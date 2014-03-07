@@ -16,7 +16,11 @@ window.App.Main =
       $(".organizations .follow_status .status_checkbox:not(:checked)").prev(".status_icon").hide()
 
     $(document).on "change", ".organizations .status_checkbox", ->
-      alert $(".status_checkbox:checked").val()
+      checked = $(this).prop("checked")
+      $(".organizations .follow_status .status_checkbox[value=" + $(this).val() + "]").each ->
+        $(this).prop("checked", checked)
+
+      $(this).closest("form").submit()
 
     $(".organizations .follow_status .status_checkbox:not(:checked)").prev(".status_icon").hide()
 

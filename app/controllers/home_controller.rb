@@ -14,5 +14,6 @@ class HomeController < ApplicationController
     @organizations.each do |organization|
       @members[organization.id] = organization.members({ fields: ["fullName", "username", "avatarHash"] })
     end
+    @followers = system_user.followers
   end
 end
