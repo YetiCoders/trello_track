@@ -35,3 +35,53 @@ en:
     show:
       recent_activity: Recent Activity (last 24 hours)
       active_cards: Active cards
+    activity:
+      on_board: on board "%{board}"
+      types:
+        addAttachmentToCard:
+        addChecklistToCard:
+        addMemberToBoard:
+        addMemberToCard: Add %{user} to the card %{card}
+        addMemberToOrganization:
+        addToOrganizationBoard:
+        commentCard:
+        copyCommentCard:
+        convertToCardFromCheckItem:
+        copyBoard:
+        createBoard:
+        createCard:
+        copyCard:
+        createList:
+        createOrganization: Organization %{name} created
+        deleteAttachmentFromCard:
+        deleteBoardInvitation:
+        deleteCard:
+        deleteOrganizationInvitation:
+        disablePowerUp:
+        emailCard:
+        enablePowerUp:
+        makeAdminOfBoard:
+        makeNormalMemberOfBoard:
+        makeNormalMemberOfOrganization:
+        makeObserverOfBoard:
+        memberJoinedTrello:
+        moveCardFromBoard:
+        moveListFromBoard:
+        moveCardToBoard:
+        moveListToBoard:
+        removeAdminFromBoard:
+        removeAdminFromOrganization:
+        removeChecklistFromCard:
+        removeFromOrganizationBoard:
+        removeMemberFromCard:
+        unconfirmedBoardInvitation:
+        unconfirmedOrganizationInvitation:
+        updateBoard:
+        updateCard:
+        updateCheckItemStateOnCard:
+        updateChecklist:
+        updateList:
+        updateMember:
+        updateOrganization:
+        updateCard:
+        updateList:

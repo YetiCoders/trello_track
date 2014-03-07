@@ -3,9 +3,7 @@ class MembersController < ApplicationController
   def show
     @current_member = trello_user.client.find(:member, params[:id])
 
-#    Rails.logger.info "=========== #{1.day.ago.to_json}"
-    @actions = @current_member.actions #:since => 1.day.ago.to_json
-#    Rails.logger.info "=========== #{@actions.count}"
+    @actions = @current_member.actions since: Date.yesterday.to_json
 
     if request.xhr?
       render js: js_html("#tab_content", partial: "tab")
