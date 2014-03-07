@@ -3,7 +3,7 @@
     %ul.nav.nav-tabs.members_tabs
       - unless @followers.include? @current_member.id
         %li.active
-          = link_to member_path(@current_member), title: @current_member.full_name do
+          = link_to member_path(@current_member.id), title: @current_member.full_name do
             = user_avatar(@current_member, :small)
             = @current_member.full_name.split.first
 
