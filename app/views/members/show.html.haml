@@ -1,8 +1,15 @@
 .page_member
   .content_block
     %ul.nav.nav-tabs.members_tabs
+      %li{ class: "active" }
+        = link_to member_path(@current_member) do
+          = user_avatar(@current_member, :small)
+          = @current_member.full_name.split.first
+
+      %li.separator &nbsp;
+
       - @members.each do |member|
-        %li{ class: (member.id == @current_member.id ? "active" : "") }
+        %li{ class: ("active" if member.id == @current_member.id) }
           = link_to member_path(member.id) do
             = user_avatar(member, :small)
             = member.full_name.split.first
