@@ -39,9 +39,9 @@ en:
       on_board: on board "%{board}"
       types:
         addAttachmentToCard:
-        addChecklistToCard:
+        addChecklistToCard: Added %{checklist} to %{card}
         addMemberToBoard:
-        addMemberToCard: Added %{user} to the card %{card}
+        addMemberToCard: Added %{user} to %{card}
         addMemberToOrganization:
         addToOrganizationBoard:
         commentCard:
@@ -49,7 +49,7 @@ en:
         convertToCardFromCheckItem:
         copyBoard:
         createBoard:
-        createCard:
+        createCard: Added %{card} to %{list}
         copyCard:
         createList:
         createOrganization: Organization %{orgname} created
@@ -73,13 +73,14 @@ en:
         removeAdminFromOrganization:
         removeChecklistFromCard:
         removeFromOrganizationBoard:
-        removeMemberFromCard:
+        removeMemberFromCard: Removed %{user} from %{card}
         unconfirmedBoardInvitation:
         unconfirmedOrganizationInvitation:
         updateBoard:
-        updateCard:
-        updateCheckItemStateOnCard:
-        updateChecklist:
+        updateCard_moved: Moved %{card} from %{list_before} to %{list_after}
+        updateCard_updated: Updated %{card}
+        updateCheckItemStateOnCard: Has %{state} %{check_item} on %{card}
+        updateChecklist: Renamed %{checklist} (from %{checklist_old})
         updateList:
         updateMember:
         updateOrganization:
