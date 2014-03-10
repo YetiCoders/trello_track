@@ -32,7 +32,7 @@ en:
       set_up_following: Set up following
       finish_set_up_following: Finish set up following
   members:
-    show:
+    tab:
       recent_activity: Recent Activity (last 24 hours)
       active_cards: Active cards
     activity:
