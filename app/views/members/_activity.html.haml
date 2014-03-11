@@ -6,4 +6,6 @@
       .date
         = a[:date].strftime "%b %d at %H:%M"
         - if a[:data]["board"]
-          = t('.on_board', board: a[:data]["board"]["name"])
+          = t(".on_board", board: a[:data]["board"]["name"])
+        -if a[:data]["organization"]
+          = t(".on_organization", organization: a[:data]["organization"]["name"])

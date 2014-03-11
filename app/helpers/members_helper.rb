@@ -14,23 +14,45 @@ module MembersHelper
             card: a[:data]["card"]["name"],
             checklist: a[:data]["checklist"]["name"]
           }
-        when :addMemberToBoard;
+        when :addMemberToBoard
+          {
+            user: a[:data]["idMemberAdded"]
+          }
         when :addMemberToCard
           {
             card: a[:data]["card"]["name"],
-            user: a[:data]["card"]["id"]
+            user: a[:data]["idMember"]
           }
-        when :addMemberToOrganization;
-        when :addToOrganizationBoard;
+        when :addMemberToOrganization
+          {
+            organization: a[:data]["organization"]["name"],
+            user: a[:data]["idMemberAdded"]
+          }
+        when :addToOrganizationBoard
+          {
+            organization: a[:data]["organization"]["name"],
+            board: a[:data]["board"]["name"]
+          }
         when :commentCard
           {
             card: a[:data]["card"]["name"],
             comment: a[:data]["text"]
           }
         when :copyCommentCard;
-        when :convertToCardFromCheckItem;
-        when :copyBoard;
-        when :createBoard;
+        when :convertToCardFromCheckItem
+          {
+            card: a[:data]["card"]["name"],
+            card_source: a[:data]["cardSource"]["name"]
+          }
+        when :copyBoard
+          {
+            board_source: a[:data]["boardSource"]["name"],
+            board: a[:data]["board"]["name"]
+          }
+        when :createBoard
+          {
+            board: a[:data]["board"]["name"]
+          }
         when :createCard
           {
             card: a[:data]["card"]["name"],
@@ -47,7 +69,9 @@ module MembersHelper
             list: a[:data]["list"]["name"]
           }
         when :createOrganization
-          { orgname: a[:data]["organization"]["name"] }
+          {
+            organization: a[:data]["organization"]["name"]
+          }
         when :deleteAttachmentFromCard
           {
             card: a[:data]["card"]["name"],
@@ -60,12 +84,30 @@ module MembersHelper
             list: a[:data]["list"]["name"]
           }
         when :deleteOrganizationInvitation;
-        when :disablePowerUp;
+        when :disablePowerUp
+          {
+            power_up: a[:data]["value"]
+          }
         when :emailCard;
-        when :enablePowerUp;
-        when :makeAdminOfBoard;
-        when :makeNormalMemberOfBoard;
-        when :makeNormalMemberOfOrganization;
+        when :enablePowerUp
+          {
+            power_up: a[:data]["value"]
+          }
+        when :makeAdminOfBoard
+          {
+            board: a[:data]["board"]["name"],
+            user: a[:data]["idMember"]
+          }
+        when :makeNormalMemberOfBoard
+          {
+            board: a[:data]["board"]["name"],
+            user: a[:data]["idMember"]
+          }
+        when :makeNormalMemberOfOrganization
+          {
+            organization: a[:data]["organization"]["name"],
+            user: a[:data]["idMember"]
+          }
         when :makeObserverOfBoard;
         when :memberJoinedTrello;
         when :moveCardFromBoard
@@ -99,11 +141,22 @@ module MembersHelper
         when :removeMemberFromCard
           {
             card: a[:data]["card"]["name"],
-            user: a[:data]["card"]["id"]
+            user: a[:data]["idMember"]
           }
         when :unconfirmedBoardInvitation;
         when :unconfirmedOrganizationInvitation;
-        when :updateBoard;
+        when :updateBoard
+          if a[:data]["old"] && a[:data]["old"]["name"]
+            {
+              board_old: a[:data]["old"]["name"],
+              type: :renamed
+            }
+          else
+            {
+              board: a[:data]["board"]["name"],
+              type: :updated
+            }
+          end
         when :updateCard
           if a[:data]["listAfter"]
             {
@@ -120,7 +173,7 @@ module MembersHelper
           else
             {
               card: a[:data]["card"]["name"],
-              type: "updated"
+              type: :updated
             }
           end
         when :updateCheckItemStateOnCard
@@ -143,11 +196,27 @@ module MembersHelper
           else
             {
               list: a[:data]["list"]["name"],
-              type: "updated"
+              type: :updated
             }
           end
         when :updateMember;
-        when :updateOrganization;
+        when :updateOrganization
+          if a[:data]["old"]
+            {
+              organization: a[:data]["organization"]["name"],
+              type: a[:data]["old"].keys.first
+            }
+          elsif a[:data]["organization"]["website"]
+            {
+              organization: a[:data]["organization"]["name"],
+              type: :set_website
+            }
+          else
+            {
+              organization: a[:data]["organization"]["name"],
+              type: :updated
+            }
+          end
       end
 
     if opts.present?
