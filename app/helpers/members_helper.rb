@@ -1,219 +1,220 @@
 module MembersHelper
 
   def action_describe(a)
+    data = a[:data]
     opts =
       case a[:type].to_sym
         when :addAttachmentToCard
           {
-            card: a[:data]["card"]["name"],
-            attachment: a[:data]["attachment"]["name"],
-            attachment_url: a[:data]["attachment"]["url"],
+            card: data["card"]["name"],
+            attachment: data["attachment"]["name"],
+            attachment_url: data["attachment"]["url"],
           }
         when :addChecklistToCard
           {
-            card: a[:data]["card"]["name"],
-            checklist: a[:data]["checklist"]["name"]
+            card: data["card"]["name"],
+            checklist: data["checklist"]["name"]
           }
         when :addMemberToBoard
           {
-            user: a[:data]["idMemberAdded"]
+            user: data["idMemberAdded"]
           }
         when :addMemberToCard
           {
-            card: a[:data]["card"]["name"],
-            user: a[:data]["idMember"]
+            card: data["card"]["name"],
+            user: data["idMember"]
           }
         when :addMemberToOrganization
           {
-            organization: a[:data]["organization"]["name"],
-            user: a[:data]["idMemberAdded"]
+            organization: data["organization"]["name"],
+            user: data["idMemberAdded"]
           }
         when :addToOrganizationBoard
           {
-            organization: a[:data]["organization"]["name"],
-            board: a[:data]["board"]["name"]
+            organization: data["organization"]["name"],
+            board: data["board"]["name"]
           }
         when :commentCard
           {
-            card: a[:data]["card"]["name"],
-            comment: a[:data]["text"]
+            card: data["card"]["name"],
+            comment: data["text"]
           }
         when :copyCommentCard;
         when :convertToCardFromCheckItem
           {
-            card: a[:data]["card"]["name"],
-            card_source: a[:data]["cardSource"]["name"]
+            card: data["card"]["name"],
+            card_source: data["cardSource"]["name"]
           }
         when :copyBoard
           {
-            board_source: a[:data]["boardSource"]["name"],
-            board: a[:data]["board"]["name"]
+            board_source: data["boardSource"]["name"],
+            board: data["board"]["name"]
           }
         when :createBoard
           {
-            board: a[:data]["board"]["name"]
+            board: data["board"]["name"]
           }
         when :createCard
           {
-            card: a[:data]["card"]["name"],
-            list: a[:data]["list"]["name"],
+            card: data["card"]["name"],
+            list: data["list"]["name"],
           }
         when :copyCard
           {
-            card: a[:data]["card"]["name"],
-            card_source: a[:data]["cardSource"]["name"],
-            list: a[:data]["list"]["name"],
+            card: data["card"]["name"],
+            card_source: data["cardSource"]["name"],
+            list: data["list"]["name"],
           }
         when :createList
           {
-            list: a[:data]["list"]["name"]
+            list: data["list"]["name"]
           }
         when :createOrganization
           {
-            organization: a[:data]["organization"]["name"]
+            organization: data["organization"]["name"]
           }
         when :deleteAttachmentFromCard
           {
-            card: a[:data]["card"]["name"],
-            attachment: a[:data]["attachment"]["name"]
+            card: data["card"]["name"],
+            attachment: data["attachment"]["name"]
           }
         when :deleteBoardInvitation;
         when :deleteCard
           {
-            id_short: '#' + a[:data]["card"]["idShort"].to_s,
-            list: a[:data]["list"]["name"]
+            id_short: '#' + data["card"]["idShort"].to_s,
+            list: data["list"]["name"]
           }
         when :deleteOrganizationInvitation;
         when :disablePowerUp
           {
-            power_up: a[:data]["value"]
+            power_up: data["value"]
           }
         when :emailCard;
         when :enablePowerUp
           {
-            power_up: a[:data]["value"]
+            power_up: data["value"]
           }
         when :makeAdminOfBoard
           {
-            board: a[:data]["board"]["name"],
-            user: a[:data]["idMember"]
+            board: data["board"]["name"],
+            user: data["idMember"]
           }
         when :makeNormalMemberOfBoard
           {
-            board: a[:data]["board"]["name"],
-            user: a[:data]["idMember"]
+            board: data["board"]["name"],
+            user: data["idMember"]
           }
         when :makeNormalMemberOfOrganization
           {
-            organization: a[:data]["organization"]["name"],
-            user: a[:data]["idMember"]
+            organization: data["organization"]["name"],
+            user: data["idMember"]
           }
         when :makeObserverOfBoard;
         when :memberJoinedTrello;
         when :moveCardFromBoard
           {
-            card: a[:data]["card"]["name"],
-            board_target: a[:data]["boardTarget"]["name"]
+            card: data["card"]["name"],
+            board_target: data["boardTarget"]["name"]
           }
         when :moveListFromBoard
           {
-            list: a[:data]["list"]["name"],
-            board_target: a[:data]["boardTarget"]["name"]
+            list: data["list"]["name"],
+            board_target: data["boardTarget"]["name"]
           }
         when :moveCardToBoard
           {
-            card: a[:data]["card"]["name"],
-            board_source: a[:data]["boardSource"]["name"]
+            card: data["card"]["name"],
+            board_source: data["boardSource"]["name"]
           }
         when :moveListToBoard
           {
-            list: a[:data]["list"]["name"],
-            board_source: a[:data]["boardSource"]["name"]
+            list: data["list"]["name"],
+            board_source: data["boardSource"]["name"]
           }
         when :removeAdminFromBoard;
         when :removeAdminFromOrganization;
         when :removeChecklistFromCard
           {
-            card: a[:data]["card"]["name"],
-            checklist: a[:data]["checklist"]["name"]
+            card: data["card"]["name"],
+            checklist: data["checklist"]["name"]
           }
         when :removeFromOrganizationBoard;
         when :removeMemberFromCard
           {
-            card: a[:data]["card"]["name"],
-            user: a[:data]["idMember"]
+            card: data["card"]["name"],
+            user: data["idMember"]
           }
         when :unconfirmedBoardInvitation;
         when :unconfirmedOrganizationInvitation;
         when :updateBoard
-          if a[:data]["old"] && a[:data]["old"]["name"]
+          if data["old"] && data["old"]["name"]
             {
-              board_old: a[:data]["old"]["name"],
+              board_old: data["old"]["name"],
               type: :renamed
             }
           else
             {
-              board: a[:data]["board"]["name"],
+              board: data["board"]["name"],
               type: :updated
             }
           end
         when :updateCard
-          if a[:data]["listAfter"]
+          if data["listAfter"]
             {
-              card: a[:data]["card"]["name"],
-              list_after: a[:data]["listAfter"]["name"],
-              list_before: a[:data]["listBefore"]["name"],
+              card: data["card"]["name"],
+              list_after: data["listAfter"]["name"],
+              list_before: data["listBefore"]["name"],
               type: "moved"
             }
-          elsif a[:data]["card"].has_key? "closed"
+          elsif data["card"].has_key? "closed"
             {
-              card: a[:data]["card"]["name"],
-              type: a[:data]["card"]["closed"] == true ? "archived" : "unarchived"
+              card: data["card"]["name"],
+              type: data["card"]["closed"] == true ? "archived" : "unarchived"
             }
           else
             {
-              card: a[:data]["card"]["name"],
+              card: data["card"]["name"],
               type: :updated
             }
           end
         when :updateCheckItemStateOnCard
           {
-            card: a[:data]["card"]["name"],
-            type: a[:data]["checkItem"]["state"],
-            check_item: a[:data]["checkItem"]["name"]
+            card: data["card"]["name"],
+            type: data["checkItem"]["state"],
+            check_item: data["checkItem"]["name"]
           }
         when :updateChecklist
           {
-            checklist: a[:data]["checklist"]["name"],
-            checklist_old: a[:data]["old"]["name"]
+            checklist: data["checklist"]["name"],
+            checklist_old: data["old"]["name"]
           }
         when :updateList
-          if a[:data]["list"].has_key? "closed"
+          if data["list"].has_key? "closed"
             {
-              list: a[:data]["list"]["name"],
-              type: a[:data]["list"]["closed"] == true ? "archived" : "unarchived"
+              list: data["list"]["name"],
+              type: data["list"]["closed"] == true ? "archived" : "unarchived"
             }
           else
             {
-              list: a[:data]["list"]["name"],
+              list: data["list"]["name"],
               type: :updated
             }
           end
         when :updateMember;
         when :updateOrganization
-          if a[:data]["old"]
+          if data["old"]
             {
-              organization: a[:data]["organization"]["name"],
-              type: a[:data]["old"].keys.first
+              organization: data["organization"]["name"],
+              type: data["old"].keys.first
             }
-          elsif a[:data]["organization"]["website"]
+          elsif data["organization"]["website"]
             {
-              organization: a[:data]["organization"]["name"],
+              organization: data["organization"]["name"],
               type: :set_website
             }
           else
             {
-              organization: a[:data]["organization"]["name"],
+              organization: data["organization"]["name"],
               type: :updated
             }
           end
@@ -230,8 +231,7 @@ module MembersHelper
 
   def username(hash)
     #TODO this method should extract username by id from cached data.
-    # It should consider 'you' user
-    hash[:user]
+    @member_actions[hash[:user]].full_name
   end
 
   def attachment(hash)

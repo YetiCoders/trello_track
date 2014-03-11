@@ -4,6 +4,13 @@ class MembersController < ApplicationController
     @current_member = trello_user.client.find(:member, params[:id])
 
     @actions = @current_member.actions since: Date.yesterday.to_json
+    @member_actions = {}
+    @actions.each do |action|
+      member_id = action.data["idMember"] || action.data["idMemberAdded"]
+      next if member_id.nil?
+      next if @member_actions.has_key? member_id
+      @member_actions[member_id] = trello_user.client.find(:member, member_id)
+    end
 
     if request.xhr?
       render js: js_html("#tab_content", partial: "tab")
