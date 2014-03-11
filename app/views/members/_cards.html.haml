@@ -1,27 +1,29 @@
 .cards.clearfix
-  - 30.times do |i|
-    .card{ "data-trello-url" => "https://trello.com/c/ejHRWArb/5-layout-wireframe"}
+  - @cards.each do |card|
+    .card{ "data-trello-url" => card.url}
       .card_inner
-        .name Very-very long card name
+        .name= card.name
         .board_and_column
-          Board name
+          = @card_boards[card.board_id].name
           \/
-          Column name
+          = @card_lists[card.list_id].name
         .info.clearfix
           .pull-left.details
-            .detail.follow
+            -#.detail.follow
               .fa.fa-eye
-            .detail.description
+            -#.detail.description
               .fa.fa-pencil
-            .detail.comment
+            -#.detail.comment
               .fa.fa-comment
               3
-            .detail.checklist.done
+            -#.detail.checklist.done
               .fa.fa-list
               5/5
           .pull-right.assigned_members
-            = user_avatar(trello_user, :small)
-            = user_avatar(trello_user, :small)
+            - card.member_ids.each do |member_id|
+              = user_avatar(@members[member_id], :small)
+
         .date
-          Changed
-          = Time.now.strftime "%b %d at %H:%M"
+          = t(".changed")
+          = card.last_activity_date.strftime "%b %d at %H:%M"
+

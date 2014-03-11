@@ -9,7 +9,7 @@
 
         %li.separator &nbsp;
 
-      - @members.each do |member|
+      - @tab_members.each do |member|
         %li{ class: ("active" if member.id == @current_member.id) }
           = link_to member_path(member.id), title: member.full_name, remote: true do
             = user_avatar(member, :small)

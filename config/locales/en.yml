@@ -96,3 +96,5 @@ en:
         updateOrganization_set_website: Set website of organization %{organization}
         updateOrganization_desc: Changed description of organization %{organization}
         updateOrganization_updated: Updated organization %{organization}
+    cards:
+      changed: Changed

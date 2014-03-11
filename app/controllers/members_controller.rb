@@ -2,25 +2,39 @@ class MembersController < ApplicationController
 
   def show
     @current_member = trello_user.client.find(:member, params[:id])
+    @members = {}
 
+    #actions
     @actions = @current_member.actions since: Date.yesterday.to_json, limit: 1000
-    @member_actions = {}
     @actions.each do |action|
       member_id = action.data["idMember"] || action.data["idMemberAdded"]
       next if member_id.nil?
-      next if @member_actions.has_key? member_id
-      @member_actions[member_id] = trello_user.client.find(:member, member_id)
+      @members[member_id] = trello_user.client.find(:member, member_id) unless @members.has_key? member_id
+    end
+
+    # cards
+    @cards = @current_member.cards fields: :all
+    @cards.sort_by!(&:last_activity_date).reverse!
+    @card_boards = {}
+    @card_lists = {}
+    Rails.logger.debug(@cards.first.inspect)
+    @cards.each do |card|
+      @card_boards[card.board_id] = card.board unless @card_boards.has_key? card.board_id
+      @card_lists[card.list_id] = card.list unless @card_lists.has_key? card.list_id
+      card.member_ids.each do |member_id|
+        @members[member_id] = trello_user.client.find(:member, member_id) unless @members.has_key? member_id
+      end
     end
 
     if request.xhr?
       render js: js_html("#tab_content", partial: "tab")
     else
-      @members = []
+      @tab_members = []
       @followers = system_user.followers
       @followers.each do |member_id|
-        @members << trello_user.client.find(:member, member_id)
+        @tab_members << @members[member_id] || trello_user.client.find(:member, member_id)
       end
-      @members.sort_by!(&:full_name)
+      @tab_members.sort_by!(&:full_name)
     end
   end
 

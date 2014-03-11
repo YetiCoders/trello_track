@@ -231,7 +231,7 @@ module MembersHelper
 
   def username(hash)
     #TODO this method should extract username by id from cached data.
-    @member_actions[hash[:user]].full_name
+    @members[hash[:user]].full_name
   end
 
   def attachment(hash)
