@@ -3,7 +3,7 @@ class MembersController < ApplicationController
   def show
     @current_member = trello_user.client.find(:member, params[:id])
 
-    @actions = @current_member.actions since: Date.yesterday.to_json
+    @actions = @current_member.actions since: Date.yesterday.to_json, limit: 1000
     @member_actions = {}
     @actions.each do |action|
       member_id = action.data["idMember"] || action.data["idMemberAdded"]
