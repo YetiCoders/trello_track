@@ -4,7 +4,7 @@
       .text
         = raw action_describe(a)
       .date
-        = a[:date].localtime.strftime "%b %d at %H:%M"
+        = a[:date].strftime "%b %d at %H:%M"
         - if a[:data]["board"]
           = t(".on_board", board: a[:data]["board"]["name"])
         -if a[:data]["organization"]
