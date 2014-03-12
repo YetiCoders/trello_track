@@ -97,10 +97,11 @@ TrelloTrack::Application.configure do
   unless ENV['DEVELOPERS_EMAIL'].present?
     raise RuntimeError, "You must set ENV['DEVELOPERS_EMAIL']"
   end
+  developers_emails = ENV['DEVELOPERS_EMAIL'].split(',')
   config.middleware.use ExceptionNotification::Rack,
     :email => {
       :email_prefix => "[ERROR] ",
-      :sender_address => %{ENV['DEVELOPERS_EMAIL']},
-      :exception_recipients => %w{ENV['DEVELOPERS_EMAIL']}
+      :sender_address => developers_emails.first,
+      :exception_recipients => developers_emails
     }
 end
