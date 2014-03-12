@@ -10,10 +10,12 @@ class ApplicationController < ActionController::Base
   private
 
   def trello_user
+    return unless system_user
     @trello_user ||= trello_client.find(:member, 'me')
   end
 
   def trello_client
+    return unless system_user
     @trello_client ||= Trello::Client.new(
       consumer_key: ENV['CONSUMER_KEY'],
       consumer_secret: ENV['CONSUMER_SECRET'],
