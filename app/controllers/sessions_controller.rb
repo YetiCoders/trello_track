@@ -27,6 +27,9 @@ class SessionsController < ApplicationController
       session[:token] = user.oauth_token
     end
 
+    # re-validate cache on sign_in
+    fetch_member(member.id, true)
+
     redirect_to root_url
   end
 

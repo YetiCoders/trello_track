@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   def trello_user
     return unless system_user
-    @trello_user ||= trello_client.find(:member, 'me')
+    @trello_user ||= fetch_member(system_user.uid)
   end
 
   def trello_client

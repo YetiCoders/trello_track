@@ -27,8 +27,8 @@ JS
      end
   end
 
-  def fetch_member(member_id)
-    Rails.cache.fetch("member-#{member_id}", expires_in: 10.minutes) do
+  def fetch_member(member_id, force = false)
+    Rails.cache.fetch("member-#{member_id}", expires_in: 10.minutes, force: force) do
       trello_client.find(:member, member_id)
     end
   end
