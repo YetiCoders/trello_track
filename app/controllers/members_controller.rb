@@ -30,7 +30,7 @@ class MembersController < ApplicationController
       @tab_members = []
       @followers = system_user.followers
       @followers.each do |member_id|
-        @tab_members << @members[member_id] || trello_user.client.find(:member, member_id)
+        @tab_members << (@members[member_id] || trello_user.client.find(:member, member_id))
       end
       @tab_members.sort_by!(&:full_name)
     end
