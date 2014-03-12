@@ -7,23 +7,21 @@ class MembersController < ApplicationController
     #actions
     @actions = @current_member.actions since: Date.yesterday.to_json, limit: 1000
     @actions.each do |action|
-      member_id = action.data["idMember"] || action.data["idMemberAdded"]
+      # if idMember exists there is member hash
+      # if idMemberAdded exists there isn't member hash so we must get it
+      member_id = action.data["idMemberAdded"]
       next if member_id.nil?
       @members[member_id] = trello_user.client.find(:member, member_id) unless @members.has_key? member_id
     end
 
     # cards
-    @cards = @current_member.cards fields: :all
+    @cards = @current_member.cards members: true
     @cards.sort_by!(&:last_activity_date).reverse!
     @card_boards = {}
     @card_lists = {}
-    Rails.logger.debug(@cards.first.inspect)
     @cards.each do |card|
       @card_boards[card.board_id] = card.board unless @card_boards.has_key? card.board_id
       @card_lists[card.list_id] = card.list unless @card_lists.has_key? card.list_id
-      card.member_ids.each do |member_id|
-        @members[member_id] = trello_user.client.find(:member, member_id) unless @members.has_key? member_id
-      end
     end
 
     if request.xhr?

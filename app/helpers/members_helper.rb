@@ -17,17 +17,17 @@ module MembersHelper
           }
         when :addMemberToBoard
           {
-            user: data["idMemberAdded"]
+            user_id: data["idMemberAdded"]
           }
         when :addMemberToCard
           {
             card: data["card"]["name"],
-            user: data["idMember"]
+            user: a[:member_participant]["fullName"]
           }
         when :addMemberToOrganization
           {
             organization: data["organization"]["name"],
-            user: data["idMemberAdded"]
+            user_id: data["idMemberAdded"]
           }
         when :addToOrganizationBoard
           {
@@ -97,17 +97,17 @@ module MembersHelper
         when :makeAdminOfBoard
           {
             board: data["board"]["name"],
-            user: data["idMember"]
+            user: a[:member_participant]["fullName"]
           }
         when :makeNormalMemberOfBoard
           {
             board: data["board"]["name"],
-            user: data["idMember"]
+            user: a[:member_participant]["fullName"]
           }
         when :makeNormalMemberOfOrganization
           {
             organization: data["organization"]["name"],
-            user: data["idMember"]
+            user: a[:member_participant]["fullName"]
           }
         when :makeObserverOfBoard;
         when :memberJoinedTrello;
@@ -142,7 +142,7 @@ module MembersHelper
         when :removeMemberFromCard
           {
             card: data["card"]["name"],
-            user: data["idMember"]
+            user: a[:member_participant]["fullName"]
           }
         when :unconfirmedBoardInvitation;
         when :unconfirmedOrganizationInvitation;
@@ -231,7 +231,7 @@ module MembersHelper
 
   def username(hash)
     #TODO this method should extract username by id from cached data.
-    @members[hash[:user]].full_name
+    @members[hash[:user_id]].full_name
   end
 
   def attachment(hash)
@@ -243,7 +243,7 @@ module MembersHelper
 
   # Wrap hash values into span with class correspond key and escape html
   def wrap(hash)
-    hash[:user] = username(hash) if hash[:user]
+    hash[:user] = username(hash) if hash[:user_id]
     hash[:attachment] = attachment(hash) if hash[:attachment]
     hash.merge(hash){|key, value| "<span class=\"#{key}\">#{h value}</span>"}
   end

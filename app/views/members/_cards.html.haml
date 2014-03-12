@@ -9,19 +9,32 @@
           = @card_lists[card.list_id].name
         .info.clearfix
           .pull-left.details
-            -#.detail.follow
-              .fa.fa-eye
-            -#.detail.description
-              .fa.fa-pencil
-            -#.detail.comment
-              .fa.fa-comment
-              3
-            -#.detail.checklist.done
-              .fa.fa-list
-              5/5
+            - if card.badges["subscribed"]
+              .detail.follow
+                .fa.fa-eye
+            - if card.badges["description"]
+              .detail.description
+                .fa.fa-pencil
+            - if card.badges["comments"] > 0
+              .detail.comment
+                .fa.fa-comment
+                = card.badges["comments"]
+            - if card.badges["attachments"] > 0
+              .detail.attachment
+                .fa.fa-paperclip
+                = card.badges["attachments"]
+            - if card.badges["checkItems"] > 0
+              .detail.checklist{ class: (card.badges["checkItems"] == card.badges["checkItemsChecked"] ? "done" : "") }
+                .fa.fa-list
+                = "#{card.badges["checkItemsChecked"]}/#{card.badges["checkItems"]}"
+            - if card.badges["due"]
+              .detail.due
+                .fa.fa-clock-o
+                = Time.parse(card.badges["due"]).strftime "%b %d"
           .pull-right.assigned_members
-            - card.member_ids.each do |member_id|
-              = user_avatar(@members[member_id], :small)
+            - card.card_members.each do |member|
+              - member = member.jsoned_into(Trello::Member)
+              = user_avatar(member, :small)
 
         .date
           = t(".changed")
