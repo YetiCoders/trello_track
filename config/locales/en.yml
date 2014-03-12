@@ -1,24 +1,3 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
   common:
     application_name: TrelloTrack
@@ -33,68 +12,70 @@ en:
       finish_set_up_following: Finish set up following
   members:
     tab:
-      recent_activity: Recent Activity (last 24 hours)
+      recent_activity: Recent activity (last 24 hours)
       active_cards: Active cards
     activity:
-      on_board: on board "%{board}"
-      on_organization: on organization "%{organization}"
+      on_board: "on board \"%{board}\""
+      on_organization: "on organization \"%{organization}\""
+      no_recent_activity: No recent activity
       types:
-        addAttachmentToCard: Attached %{attachment} to %{card}
-        addChecklistToCard: Added %{checklist} to %{card}
-        addMemberToBoard: Added  %{user} to this board
-        addMemberToCard: Added %{user} to %{card}
-        addMemberToOrganization: Add %{user} to organization %{organization}
-        addToOrganizationBoard: Added board %{board} to %{organization}
-        commentCard: Commented %{card} %{comment}
+        addAttachmentToCard: "Attached %{attachment} to %{card}"
+        addChecklistToCard: "Added %{checklist} to %{card}"
+        addMemberToBoard: "Added  %{user} to this board"
+        addMemberToCard: "Added %{user} to %{card}"
+        addMemberToOrganization: "Add %{user} to organization %{organization}"
+        addToOrganizationBoard: "Added board %{board} to %{organization}"
+        commentCard: "Commented %{card} %{comment}"
         copyCommentCard:
-        convertToCardFromCheckItem: Сonverted %{card} from a checklist item on %{card_source}
-        copyBoard: Copied board %{board} from %{board_source}
-        createBoard: Created board %{board}
-        createCard: Added card %{card} to %{list}
-        copyCard: Copied %{card} from %{card_source} in list %{list}
-        createList: Added list %{list}
-        createOrganization: Organization %{organization} created
-        deleteAttachmentFromCard: Deleted %{attachment} from %{card}
+        convertToCardFromCheckItem: "Сonverted %{card} from a checklist item on %{card_source}"
+        copyBoard: "Copied board %{board} from %{board_source}"
+        createBoard: "Created board %{board}"
+        createCard: "Added card %{card} to %{list}"
+        copyCard: "Copied %{card} from %{card_source} in list %{list}"
+        createList: "Added list %{list}"
+        createOrganization: "Organization %{organization} created"
+        deleteAttachmentFromCard: "Deleted %{attachment} from %{card}"
         deleteBoardInvitation:
-        deleteCard: Deleted card %{id_short} from %{list}
+        deleteCard: "Deleted card %{id_short} from %{list}"
         deleteOrganizationInvitation:
-        disablePowerUp: Disabled %{power_up} power-up on this board
+        disablePowerUp: "Disabled %{power_up} power-up on this board"
         emailCard:
-        enablePowerUp: Enabled %{power_up} power-up on this board
-        makeAdminOfBoard: Made %{user} an admin of board %{board}
-        makeNormalMemberOfBoard: Made %{user} a normal user on board %{board}
-        makeNormalMemberOfOrganization: Made %{user} a normal user in organization %{organization}
+        enablePowerUp: "Enabled %{power_up} power-up on this board"
+        makeAdminOfBoard: "Made %{user} an admin of board %{board}"
+        makeNormalMemberOfBoard: "Made %{user} a normal user on board %{board}"
+        makeNormalMemberOfOrganization: "Made %{user} a normal user in organization %{organization}"
         makeObserverOfBoard:
         memberJoinedTrello:
-        moveCardFromBoard: Transferred card %{card} to %{board_target}
-        moveListFromBoard: Transferred list %{list} to %{board_target}
-        moveCardToBoard: Transferred card %{card} from %{board_source}
-        moveListToBoard: Transferred list %{list} from %{board_source}
+        moveCardFromBoard: "Transferred card %{card} to %{board_target}"
+        moveListFromBoard: "Transferred list %{list} to %{board_target}"
+        moveCardToBoard: "Transferred card %{card} from %{board_source}"
+        moveListToBoard: "Transferred list %{list} from %{board_source}"
         removeAdminFromBoard:
         removeAdminFromOrganization:
-        removeChecklistFromCard: Removed %{checklist} from %{card}
+        removeChecklistFromCard: "Removed %{checklist} from %{card}"
         removeFromOrganizationBoard:
-        removeMemberFromCard: Removed %{user} from %{card}
+        removeMemberFromCard: "Removed %{user} from %{card}"
         unconfirmedBoardInvitation:
         unconfirmedOrganizationInvitation:
-        updateBoard_renamed: Renamed this board (from %{board_old})
-        updateBoard_updated: Updated board %{board}
-        updateCard_moved: Moved card %{card} from %{list_before} to %{list_after}
-        updateCard_updated: Updated card %{card}
-        updateCard_archived: Archived card %{card}
-        updateCard_unarchived: Unarchived card %{card}
-        updateCheckItemStateOnCard_complete: Completed %{check_item} on %{card}
-        updateCheckItemStateOnCard_incomplete: Incompleted %{check_item} on %{card}
-        updateChecklist: Renamed %{checklist} (from %{checklist_old})
-        updateList_updated: Updated list %{list}
-        updateList_archived: Archived list %{list}
-        updateList_unarchived: Unarchived list %{list}
+        updateBoard_renamed: "Renamed this board (from %{board_old})"
+        updateBoard_updated: "Updated board %{board}"
+        updateCard_moved: "Moved card %{card} from %{list_before} to %{list_after}"
+        updateCard_updated: "Updated card %{card}"
+        updateCard_archived: "Archived card %{card}"
+        updateCard_unarchived: "Unarchived card %{card}"
+        updateCheckItemStateOnCard_complete: "Completed %{check_item} on %{card}"
+        updateCheckItemStateOnCard_incomplete: "Incompleted %{check_item} on %{card}"
+        updateChecklist: "Renamed %{checklist} (from %{checklist_old})"
+        updateList_updated: "Updated list %{list}"
+        updateList_archived: "Archived list %{list}"
+        updateList_unarchived: "Unarchived list %{list}"
         updateMember:
-        updateOrganization_name: Changed name of organization %{organization}
-        updateOrganization_displayName: Changed display name of organization %{organization}
-        updateOrganization_website: Changed website of organization %{organization}
-        updateOrganization_set_website: Set website of organization %{organization}
-        updateOrganization_desc: Changed description of organization %{organization}
-        updateOrganization_updated: Updated organization %{organization}
+        updateOrganization_name: "Changed name of organization %{organization}"
+        updateOrganization_displayName: "Changed display name of organization %{organization}"
+        updateOrganization_website: "Changed website of organization %{organization}"
+        updateOrganization_set_website: "Set website of organization %{organization}"
+        updateOrganization_desc: "Changed description of organization %{organization}"
+        updateOrganization_updated: "Updated organization %{organization}"
     cards:
       changed: Changed
+      no_active_cards: No active cards

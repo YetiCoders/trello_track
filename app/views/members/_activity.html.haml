@@ -1,4 +1,7 @@
 .activities
+  - if @actions.blank?
+    .hint= t ".no_recent_activity"
+
   - @actions.map(&:attributes).each do |a|
     .activity
       .text
