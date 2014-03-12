@@ -7,10 +7,20 @@
     %h4= t ".recent_activity"
 
     #recent_activity
-      = render "activity"
+
+    #activity_loader
+      .fa.fa-refresh.fa-spin
 
   .col-md-6
     %h4= t ".active_cards"
 
     #active_cards
-      = render "cards"
+
+    #cards_loader
+      .fa.fa-refresh.fa-spin
+
+:javascript
+  $(function(){
+    window.App.Members.get_cards("#{cards_member_url(@current_member.id)}");
+    window.App.Members.get_activity("#{activities_member_url(@current_member.id)}");
+  });

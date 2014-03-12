@@ -221,8 +221,6 @@ module MembersHelper
       end
 
     if opts.present?
-      Rails.logger.debug opts.inspect
-      Rails.logger.debug "members.activity.types.#{a[:type]}#{opts[:type] ? "_#{opts[:type]}" : ""}"
       t("members.activity.types.#{a[:type]}#{opts[:type] ? "_#{opts[:type]}" : ""}", wrap(opts))
     else
       a.inspect

@@ -63,6 +63,8 @@ TrelloTrack::Application.routes.draw do
 
   resources :members, only: [:show, :update] do
     member do
+      get  :activities
+      get  :cards
       post :follow
     end
   end

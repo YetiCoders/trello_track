@@ -6,12 +6,27 @@ window.App.Members =
     $(document).on "click", ".members_tabs a", ->
       $(".members_tabs li").removeClass "active"
       $(this).closest("li").addClass "active"
-      $("#tab_loader").show()
 
-    $(".members_tabs a").bind "ajax:complete", (request) ->
-      $("#tab_loader").hide()
+  get_activity: (url) ->
+    $("#activity_loader").show()
 
-    $("#tab_loader").hide()
+    $.ajax
+      url: url
+      method: "GET"
+      async: true
+      success: (data) ->
+        $("#activity_loader").hide()
+
+  get_cards: (url) ->
+    $("#cards_loader").show()
+
+    $.ajax
+      url: url
+      method: "GET"
+      async: true
+      success: (data) ->
+        $("#cards_loader").hide()
+
 
 $ ->
   window.App.Members.init()
