@@ -1,4 +1,6 @@
 window.App.Members =
+  first_time: true,
+
   init: ->
     $("#tab_loader").show()
 
@@ -9,29 +11,53 @@ window.App.Members =
       $("#tab_loader, #activity_loader, #cards_loader").show()
       $(".members_tabs li").removeClass "active"
       $(this).closest("li").addClass "active"
+      window.App.Members.save_state $(this)
 
     $(document).on "mouseup", ".card", (e) ->
       switch e.which
         when 1, 2
           window.open $(this).attr("data-trello-url"), "_blank"
 
-  get_activity: (url) ->
-    $.ajax
+    $(window).on "popstate", ->
+      state = window.history.state
+      if !window.App.Members.first_time && state?
+        $(".members_tabs li").removeClass "active"
+        $("#" + state["tab_id"]).closest("li").addClass "active"
+        window.App.Members.get_all state["path"]
+
+      window.App.Members.first_time = false
+
+  save_state: (a_selector)->
+    state = { tab_id: a_selector.prop("id"), path: a_selector.prop("href") }
+    if window.App.Members.first_time
+      window.history.replaceState state, '', a_selector.prop("href")
+    else
+      window.history.pushState state, '', a_selector.prop("href")
+
+  get_all: (url) ->
+    $.ajax(
       url: url
       method: "GET"
       async: true
-      success: (data) ->
-        $("#tab_loader").hide()
-        $("#activity_loader").hide()
+    )
+
+  get_activity: (url) ->
+    $.ajax(
+      url: url
+      method: "GET"
+      async: true
+    ).done ->
+      $("#tab_loader").hide()
+      $("#activity_loader").hide()
 
   get_cards: (url) ->
-    $.ajax
+    $.ajax(
       url: url
       method: "GET"
       async: true
-      success: (data) ->
-        $("#tab_loader").hide()
-        $("#cards_loader").hide()
+    ).done ->
+      $("#tab_loader").hide()
+      $("#cards_loader").hide()
 
 $ ->
   window.App.Members.init()

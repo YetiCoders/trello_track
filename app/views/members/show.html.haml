@@ -3,7 +3,7 @@
     %ul.nav.nav-tabs.members_tabs
       - unless @followers.include? @current_member.id
         %li.active
-          = link_to member_path(@current_member.id), title: @current_member.full_name do
+          = link_to member_path(@current_member.id), title: @current_member.full_name, id: "tab_#{@current_member.id}" do
             = user_avatar(@current_member, :small)
             = @current_member.full_name.split.first
 
@@ -11,7 +11,7 @@
 
       - @tab_members.each do |member|
         %li{ class: ("active" if member.id == @current_member.id) }
-          = link_to member_path(member.id), title: member.full_name, remote: true do
+          = link_to member_path(member.id), title: member.full_name, remote: true, id: "tab_#{member.id}" do
             = user_avatar(member, :small)
             = member.full_name.split.first
 
@@ -21,3 +21,9 @@
 
     #tab_loader
       .fa.fa-refresh.fa-spin
+
+:javascript
+  $(function(){
+    window.App.Members.save_state($("#tab_#{@current_member.id}"));
+  });
+
