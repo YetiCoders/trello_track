@@ -1,5 +1,4 @@
 class MembersController < ApplicationController
-
   def show
     @current_member = trello_user.client.find(:member, params[:id])
 
