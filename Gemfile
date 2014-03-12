@@ -7,6 +7,7 @@ gem 'pg'
 gem 'bootstrap-sass'
 gem 'browser-timezone-rails'
 gem 'coffee-rails', '~> 4.0.0'
+gem 'dalli'
 gem 'exception_notification'
 gem 'font-awesome-sass'
 gem 'jquery-rails'
@@ -17,14 +18,16 @@ gem 'therubyracer', platforms: :ruby
 gem 'uglifier', '>= 1.3.0'
 
 # enable heroku features
-gem 'rails_12factor', :group => :production
-
-# Use dotenv for load secrets
-gem 'dotenv-rails', :groups => [:development, :test]
+group :production do
+  gem 'rails_12factor'
+  gem 'memcachier'
+end
 
 group :development, :test do
-  gem 'rspec-rails'
+  # Use dotenv for load secrets
+  gem 'dotenv-rails'
   gem 'faker'
   gem 'factory_girl_rails'
   gem 'puma'
+  gem 'rspec-rails'
 end

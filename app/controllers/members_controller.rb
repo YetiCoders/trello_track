@@ -1,7 +1,8 @@
 class MembersController < ApplicationController
-  def show
-    @current_member = trello_client.find(:member, params[:id])
 
+  before_action :current_member, only: [:show, :activities, :cards]
+
+  def show
     if request.xhr?
       render js: js_html("#tab_content", partial: "tab")
     else
@@ -9,7 +10,7 @@ class MembersController < ApplicationController
       @followers = system_user.followers
 
       @followers.each do |member_id|
-        @tab_members << trello_client.find(:member, member_id)
+        @tab_members << fetch_member(member_id)
       end
 
       @tab_members.sort_by!(&:full_name)
@@ -17,7 +18,6 @@ class MembersController < ApplicationController
   end
 
   def activities
-    @current_member = trello_client.find(:member, params[:id])
     @members = {}
 
     @actions = @current_member.actions since: Date.yesterday.to_json, limit: 1000
@@ -32,7 +32,7 @@ class MembersController < ApplicationController
       unless @members.has_key?(member_id)
         @members[member_id] = nil
         threads << Thread.new(member_id) do |fetch_id|
-          @members[fetch_id] = trello_client.find(:member, fetch_id)
+          @members[fetch_id] = fetch_member(fetch_id)
         end
       end
     end
@@ -42,7 +42,6 @@ class MembersController < ApplicationController
   end
 
   def cards
-    @current_member = trello_client.find(:member, params[:id])
     @cards = @current_member.cards members: true
     @cards.sort_by!(&:last_activity_date).reverse!
     @card_boards = {}
@@ -77,4 +76,11 @@ class MembersController < ApplicationController
 
     render nothing: true
   end
+
+  private
+
+  def current_member
+    @current_member ||= fetch_member(params[:id])
+  end
+
 end

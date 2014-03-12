@@ -26,4 +26,10 @@ JS
        image_tag "avatar_#{size}.png"
      end
   end
+
+  def fetch_member(member_id)
+    Rails.cache.fetch("member-#{member_id}", expires_in: 10.minutes) do
+      trello_client.find(:member, member_id)
+    end
+  end
 end
