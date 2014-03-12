@@ -1,11 +1,16 @@
 window.App.Members =
   first_time: true,
+  requests_pool: [],
 
   init: ->
     $("#tab_loader").show()
 
-    $(".members_tabs a").bind "ajax:complete", (request) ->
+    $(".members_tabs a").bind "ajax:complete", (event, request) ->
       $("#tab_loader").hide()
+
+    $(".members_tabs a").bind "ajax:beforeSend", (event, request) ->
+      window.App.Members.abort_requests()
+      window.App.Members.requests_pool.push(request)
 
     $(document).on "click", ".members_tabs a", ->
       $("#tab_loader, #activity_loader, #cards_loader").show()
@@ -27,6 +32,14 @@ window.App.Members =
 
       window.App.Members.first_time = false
 
+  abort_requests: ->
+    console.log window.App.Members.requests_pool
+    $.each window.App.Members.requests_pool, (idx, request) ->
+      if request.readyState != 4
+        request.abort()
+
+    window.App.Members.requests_pool = []
+
   save_state: (a_selector)->
     state = { tab_id: a_selector.prop("id"), path: a_selector.prop("href") }
     if window.App.Members.first_time
@@ -39,6 +52,8 @@ window.App.Members =
       url: url
       method: "GET"
       async: true
+      beforeSend: (request)->
+        window.App.Members.requests_pool.push(request)
     )
 
   get_activity: (url) ->
@@ -46,6 +61,8 @@ window.App.Members =
       url: url
       method: "GET"
       async: true
+      beforeSend: (request)->
+        window.App.Members.requests_pool.push(request)
     ).done ->
       $("#tab_loader").hide()
       $("#activity_loader").hide()
@@ -55,6 +72,8 @@ window.App.Members =
       url: url
       method: "GET"
       async: true
+      beforeSend: (request)->
+        window.App.Members.requests_pool.push(request)
     ).done ->
       $("#tab_loader").hide()
       $("#cards_loader").hide()
