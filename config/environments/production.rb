@@ -93,4 +93,14 @@ TrelloTrack::Application.configure do
     :enable_starttls_auto => true
   }
 
+  # Exception Notification
+  unless ENV['DEVELOPERS_EMAIL'].present?
+    raise RuntimeError, "You must set ENV['DEVELOPERS_EMAIL']"
+  end
+  config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "[ERROR] ",
+      :sender_address => %{ENV['DEVELOPERS_EMAIL']},
+      :exception_recipients => %w{ENV['DEVELOPERS_EMAIL']}
+    }
 end
