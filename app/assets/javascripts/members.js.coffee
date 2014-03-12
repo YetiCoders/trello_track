@@ -33,7 +33,6 @@ window.App.Members =
       window.App.Members.first_time = false
 
   abort_requests: ->
-    console.log window.App.Members.requests_pool
     $.each window.App.Members.requests_pool, (idx, request) ->
       if request.readyState != 4
         request.abort()
