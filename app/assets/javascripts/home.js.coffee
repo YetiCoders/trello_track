@@ -24,5 +24,11 @@ window.App.Main =
 
     $(".organizations .follow_status .status_checkbox:not(:checked)").prev(".status_icon").hide()
 
+    $container = $(".organizations")
+
+    $container.masonry
+      gutter: 20
+      itemSelector: ".organization"
+
 $ ->
   window.App.Main.init()

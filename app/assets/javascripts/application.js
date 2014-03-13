@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require browser_timezone_rails/application
+//= require masonry.pkgd.min
 //= require global
 //= require_tree .
