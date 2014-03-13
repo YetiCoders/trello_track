@@ -13,6 +13,8 @@ gem 'font-awesome-sass'
 gem 'foreman'
 gem 'jquery-rails'
 gem 'haml'
+gem 'hpricot'  # need for premailer-rails
+gem 'premailer-rails'
 gem 'puma'
 gem 'ruby-trello', github: 'yeticoders/ruby-trello', branch: 'trello-track'
 gem 'sass-rails', '~> 4.0.0'

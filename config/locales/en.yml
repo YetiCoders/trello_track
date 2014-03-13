@@ -81,3 +81,9 @@ en:
     cards:
       changed: Changed
       no_active_cards: No active cards
+
+  user_mailer:
+    subjects:
+      followers_report: Nightly Followers Report
+    followers_report:
+      title: Activity Report

@@ -16,11 +16,7 @@ class ApplicationController < ActionController::Base
 
   def trello_client
     return unless system_user
-    @trello_client ||= Trello::Client.new(
-      consumer_key: ENV['CONSUMER_KEY'],
-      consumer_secret: ENV['CONSUMER_SECRET'],
-      oauth_token: system_user.oauth_token,
-      oauth_token_secret: system_user.oauth_token_secret)
+    @trello_client ||= TrelloWrapper::trello_client(system_user)
   end
 
   def system_user

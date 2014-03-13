@@ -23,5 +23,7 @@ module TrelloTrack
 
     config.cache_store = :dalli_store
     config.action_controller.perform_caching = true
+
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end
