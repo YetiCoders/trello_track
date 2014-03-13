@@ -60,6 +60,8 @@ en:
         updateBoard_renamed: "Renamed this board (from %{board_old})"
         updateBoard_updated: "Updated board %{board}"
         updateCard_moved: "Moved card %{card} from %{list_before} to %{list_after}"
+        updateCard_moved_down: "Moved down card %{card}"
+        updateCard_moved_up: "Moved up card %{card}"
         updateCard_updated: "Updated card %{card}"
         updateCard_archived: "Archived card %{card}"
         updateCard_unarchived: "Unarchived card %{card}"

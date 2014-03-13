@@ -171,6 +171,18 @@ module MembersHelper
               card: data["card"]["name"],
               type: data["card"]["closed"] == true ? "archived" : "unarchived"
             }
+          elsif data["old"] && data["old"].has_key?("pos")
+            if (data["old"]["pos"] > data["card"]["pos"])
+              {
+                card: data["card"]["name"],
+                type:  :moved_up
+              }
+            else
+              {
+                card: data["card"]["name"],
+                type: :moved_down
+              }
+            end
           else
             {
               card: data["card"]["name"],
@@ -223,7 +235,13 @@ module MembersHelper
     if opts.present?
       t("members.activity.types.#{a[:type]}#{opts[:type] ? "_#{opts[:type]}" : ""}", wrap(opts))
     else
-      a.inspect
+      if Rails.env.development?
+        a.inspect
+      else
+        # send email to developers with hash
+        UserMailer::no_action_email(a)
+        a[:type]
+      end
     end
   end
 
