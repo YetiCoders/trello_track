@@ -38,7 +38,7 @@
             - if card.badges["due"]
               .detail.due
                 .fa.fa-clock-o
-                = Time.parse(card.badges["due"]).strftime "%b %d"
+                = Time.parse(card.badges["due"]).in_time_zone.strftime "%b %d"
 
           .pull-right.assigned_members
             - card.card_members.each do |member|
@@ -47,4 +47,4 @@
 
         .date
           = t(".changed")
-          = card.last_activity_date.strftime "%b %d at %H:%M"
+          = card.last_activity_date.in_time_zone.strftime "%b %d at %H:%M"
