@@ -20,7 +20,7 @@ every hour, it will send email at follower local time 1:00 AM.
 Or daily at explicit time in your time zone if you wish:
 > rake reports:followers:all
 
-[Heroku Sheduler details](https://devcenter.heroku.com/articles/scheduler)
+Heroku Scheduler [details](https://devcenter.heroku.com/articles/scheduler).
 
 ## Demo
 
