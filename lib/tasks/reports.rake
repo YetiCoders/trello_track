@@ -5,7 +5,7 @@ namespace :reports do
     users = User.includes(:follower).where(subscribed: true)
 
     users.each do |user|
-      next if Time.now.in_time_zone(user.time_zone).hour != 14
+      next if Time.now.in_time_zone(user.time_zone).hour != 1
 
       followers = user.followers
       next if followers.empty?
