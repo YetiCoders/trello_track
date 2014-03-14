@@ -1,7 +1,11 @@
 # README
 
 This app is to allow one Trello user to "follow" another trello user and see their cards and activity which are all publicly available via the Trello API. Additionaly the user can subscribe to receive a nightly report of the users cards and activities the day before.
-This app developed to deploy on Heroku in mind. But, it may be deployed anywhere.
+It is based on trello [Organizations](http://help.trello.com/customer/portal/topics/403651-trello-organizations/articles) feature. It will to show your organizations and members.
+
+This app developed to deploy on Heroku in mind, but it may be deployed anywhere.
+
+Configured [memcached](http://memcached.org/) (Heroku add-on) is strongly recommended!
 
 ## Nightly cron
 
