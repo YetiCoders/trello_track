@@ -3,9 +3,11 @@ class FollowersReportWorker
 
   def perform
     # get users who sent report
-    users = User.includes(:follower)  #TODO only with turn on setting
+    users = User.includes(:follower).where(subscribed: true)
 
     users.each do |user|
+      next if Time.now.in_time_zone(user.time_zone).hour != 1
+
       followers = user.followers
       next if followers.empty?
 
@@ -37,7 +39,7 @@ class FollowersReportWorker
         options[:members_info][member_id] = { actions: actions, cards: cards }
       end
 
-      UserMailer::followers_report(ENV['DEVELOPERS_EMAIL'], options) #TODO get email from user
+      UserMailer::followers_report(user.email, options)
     end
 
   end

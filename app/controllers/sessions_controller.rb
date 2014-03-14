@@ -21,6 +21,7 @@ class SessionsController < ApplicationController
     user.name = member.username
     user.oauth_token = at.params[:oauth_token]
     user.oauth_token_secret = at.params[:oauth_token_secret]
+    user.time_zone = Time.zone.name
 
     if user.save
       session[:user_id] = user.id
@@ -34,8 +35,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
-    session[:token] = nil
+    reset_session
+    cookies.delete "browser.timezone"
     redirect_to root_url
   end
 
