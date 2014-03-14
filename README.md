@@ -1,7 +1,9 @@
 # README
 
-This app is to allow one Trello user to "follow" another trello user and see their cards and activity which are all publicly available via the Trello API. Additionaly the user can subscribe to receive a nightly report of the users cards and activities the day before.
+This app is to allow one Trello user to "follow" another trello user and see their cards and activity which are all publicly available via the Trello API.
 It is based on trello [Organizations](http://help.trello.com/customer/portal/topics/403651-trello-organizations/articles) feature. It will to show your organizations and members.
+
+Additionaly the user can subscribe to receive a nightly report of the users cards and activities the day before.
 
 This app developed to deploy on Heroku in mind, but it may be deployed anywhere.
 
@@ -22,7 +24,7 @@ Or daily at explicit time in your time zone if you wish:
 
 ## Demo
 
-See [Live App](http://trello-track.herokuapp.com)
+See [Live App](http://trello-track.herokuapp.com).
 
 If you want to use it in the production, please deploy app in your instance.
 
