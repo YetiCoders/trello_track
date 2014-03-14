@@ -82,6 +82,7 @@ TrelloTrack::Application.configure do
   config.action_mailer.default_url_options = {
     :host => 'trello-track.herokuapp.com'
   }
+  config.action_mailer.asset_host = 'http://trello-track.herokuapp.com'
 
   ActionMailer::Base.smtp_settings = {
     :address        => 'smtp.sendgrid.net',

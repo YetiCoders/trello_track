@@ -2,12 +2,17 @@
 %html
   %head
     = stylesheet_link_tag "followers_report"
+    :css
+      .detail {
+        background: url("#{image_path("card_icons.png")}") no-repeat 0 0;
+      }
   %body
     .page_followers_report
-      = link_to "/", title: t("common.application_name"), class: "navbar-brand" do
-        = image_tag "/logo.png"
+      .header
+        = link_to "/", title: t("common.application_name"), class: "navbar-brand" do
+          = image_tag "/logo.png"
 
-      %h3= t(".title")
+        %h3= t(".title")
 
       - @members_info.each do |member_id, info|
         .member_info
@@ -49,25 +54,20 @@
                   .pull-left.details
                     - if card.badges["subscribed"]
                       .detail.follow
-                        .fa.fa-eye
 
                     - if card.badges["description"]
                       .detail.description
-                        .fa.fa-pencil
 
                     - if card.badges["comments"] > 0
                       .detail.comment
-                        .fa.fa-comment
                         = card.badges["comments"]
 
                     - if card.badges["attachments"] > 0
                       .detail.attachment
-                        .fa.fa-paperclip
                         = card.badges["attachments"]
 
                     - if card.badges["checkItems"] > 0
                       .detail.checklist{ class: (card.badges["checkItems"] == card.badges["checkItemsChecked"] ? "done" : "") }
-                        .fa.fa-list
                         = "#{card.badges["checkItemsChecked"]}/#{card.badges["checkItems"]}"
 
                     - if card.badges["due"]
