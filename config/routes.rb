@@ -1,7 +1,11 @@
+require 'sidekiq/web'
+
 TrelloTrack::Application.routes.draw do
   get "/sign_in" => "sessions#create", as: :login
   get "/sign_out" => "sessions#destroy", as: :logout
   get '/oauth/callback' => "sessions#auth"
+
+  mount Sidekiq::Web => '/sidekiq'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
