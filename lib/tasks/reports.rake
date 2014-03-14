@@ -1,12 +1,11 @@
-class FollowersReportWorker
-  include Sidekiq::Worker
-
-  def perform
+namespace :reports do
+  desc "nightly cron email reports: followed user's recent activity and cards"
+  task followers: :environment do
     # get users who sent report
     users = User.includes(:follower).where(subscribed: true)
 
     users.each do |user|
-      next if Time.now.in_time_zone(user.time_zone).hour != 1
+      next if Time.now.in_time_zone(user.time_zone).hour != 14
 
       followers = user.followers
       next if followers.empty?
@@ -41,6 +40,5 @@ class FollowersReportWorker
 
       UserMailer::followers_report(user.email, options)
     end
-
   end
 end
