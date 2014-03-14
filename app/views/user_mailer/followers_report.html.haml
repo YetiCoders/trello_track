@@ -9,10 +9,10 @@
   %body
     .page_followers_report
       .header
-        = link_to "/", title: t("common.application_name"), class: "navbar-brand" do
+        = link_to "/", title: t("common.application_name"), style: "float: left" do
           = image_tag "/logo.png"
 
-        %h2= t(".title")
+        %h1{style: "text-align: right"}= t(".title")
 
       - @members_info.each do |member_id, info|
         .member_info

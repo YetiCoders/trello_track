@@ -1,11 +1,13 @@
 namespace :reports do
   desc "nightly cron email reports: followed user's recent activity and cards"
-  task followers: :environment do
+
+
+  task :followers, [:all] => :environment do |t, args|
     # get users who sent report
     users = User.includes(:follower).where(subscribed: true)
 
     users.each do |user|
-      next if Time.now.in_time_zone(user.time_zone).hour != 1
+      next if args[:all].nil? && Time.now.in_time_zone(user.time_zone).hour != 1
 
       followers = user.followers
       next if followers.empty?
@@ -21,6 +23,7 @@ namespace :reports do
 
         #actions
         actions = member.actions since: Date.yesterday.to_json, limit: 1000
+        actions.sort_by!(&:date)
         actions.each do |action|
           mid = action.data["idMemberAdded"]
           next if mid.nil?
