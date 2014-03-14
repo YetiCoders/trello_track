@@ -4,7 +4,7 @@
     = stylesheet_link_tag "followers_report"
     :css
       .detail {
-        background: url("#{image_path("card_icons.png")}") no-repeat 0 0;
+        background: url("#{asset_path("card_icons.png")}") no-repeat 0 0;
       }
   %body
     .page_followers_report
@@ -12,7 +12,7 @@
         = link_to "/", title: t("common.application_name"), class: "navbar-brand" do
           = image_tag "/logo.png"
 
-        %h3= t(".title")
+        %h2= t(".title")
 
       - @members_info.each do |member_id, info|
         .member_info
