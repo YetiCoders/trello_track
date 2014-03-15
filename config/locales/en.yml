@@ -3,7 +3,7 @@ en:
     attributes:
       user:
         email: E-mail
-        subscribed: Sign up for nightly reports
+        subscribed: Sign up for nightly Followers Report
 
   common:
     application_name: TrelloTrack
