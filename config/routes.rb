@@ -69,5 +69,7 @@ TrelloTrack::Application.routes.draw do
     end
   end
 
+  resources :users, only: [:show, :update]
+
   root to: "home#index"
 end

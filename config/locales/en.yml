@@ -1,10 +1,18 @@
 en:
+  activerecord:
+    attributes:
+      user:
+        email: E-mail
+        subscribed: Sign up for nightly reports
+
   common:
     application_name: TrelloTrack
     sign_in: Sign in via Trello
     sign_out: Log out
+    save: Save
     pages:
       main: Main page
+      settings: Settings
   home:
     main:
       my_organizations: My organizations
@@ -81,6 +89,13 @@ en:
     cards:
       changed: Changed
       no_active_cards: No active cards
+
+  users:
+    messages:
+      settings_saved: Settings saved
+    show:
+      title: Settings
+      placeholder_email: E-mail
 
   user_mailer:
     subjects:

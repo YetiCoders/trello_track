@@ -1,6 +1,22 @@
 module ApplicationHelper
   include ActionView::Helpers::JavaScriptHelper
 
+  def flash_html
+    html = []
+
+    flash.to_hash.each do |type, messages|
+      messages = Array(messages).join "<br />"
+      type = "danger" if type == :error
+      html << content_tag(:div, class: "alert alert-dismissable alert-#{type}") do
+        concat content_tag(:div, "&times;".html_safe, class: :close, "data-dismiss" => "alert", "aria-hidden" => "true")
+        concat messages
+      end
+    end
+
+    flash.discard
+    html.join("\n").html_safe
+  end
+
   def js_void
     return "javascript:void(0);"
   end

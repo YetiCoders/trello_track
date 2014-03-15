@@ -1,0 +1,20 @@
+.page_settings
+
+  .content_block.offset
+    = flash_html
+
+    %h3= t(".title")
+
+  .content_block.white_bg
+    .settings
+      = form_for system_user do |f|
+        .form-group
+          = f.label :email
+          = f.text_field :email, class: "form-control", placeholder: t('.placeholder_email')
+
+        .checkbox
+          = f.check_box :subscribed
+          = f.label :subscribed
+
+        = f.submit t("common.save"),  class: "btn btn-default"
+
