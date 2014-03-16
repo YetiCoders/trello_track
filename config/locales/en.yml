@@ -99,6 +99,6 @@ en:
 
   user_mailer:
     subjects:
-      followers_report: Nightly Followers Report
-    followers_report:
+      follower_report: "%{user}: Activity Report"
+    follower_report:
       title: Activity Report
