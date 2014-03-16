@@ -1,7 +1,5 @@
 namespace :reports do
   desc "nightly cron email reports: followed user's recent activity and cards"
-
-
   task :followers, [:all] => :environment do |t, args|
     # get users who sent report
     users = User.includes(:follower).where(subscribed: true)
@@ -25,7 +23,7 @@ namespace :reports do
 
         #actions
         actions = member.actions since: Date.yesterday.to_json, limit: 1000
-        actions.sort_by!(&:date).reverse
+        actions.sort_by!(&:date).reverse!
         actions.each do |action|
           mid = action.data["idMemberAdded"]
           next if mid.nil?
@@ -34,7 +32,7 @@ namespace :reports do
 
         #cards
         cards = member.cards members: true
-        cards.sort_by!(&:last_activity_date).reverse
+        cards.sort_by!(&:last_activity_date).reverse!
         cards.each do |card|
           card_boards[card.board_id] = card.board unless card_boards.has_key?(card.board_id)
           card_lists[card.list_id] = card.list unless card_lists.has_key?(card.list_id)
