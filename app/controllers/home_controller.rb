@@ -9,9 +9,14 @@ class HomeController < ApplicationController
     @organizations = trello_user.organizations.sort_by(&:display_name)
     @members = {}
 
+    threads = []
     @organizations.each do |organization|
-      @members[organization.id] = organization.members({ fields: ["fullName", "username", "avatarHash"] })
+      threads << Thread.new(organization) do |org|
+        @members[org.id] = org.members({ fields: ["fullName", "username", "avatarHash"] })
+      end
     end
+    threads.each {|thr| thr.join }
+
     @followers = system_user.followers
   end
 end
