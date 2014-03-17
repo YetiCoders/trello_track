@@ -41,6 +41,7 @@ GEM
     atomic (1.1.15)
     bootstrap-sass (3.1.1.0)
       sass (~> 3.2)
+    bootstrap-switch-rails (2.0.1)
     browser-timezone-rails (0.0.7)
       jquery-rails
       rails (>= 3.1)
@@ -179,6 +180,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-sass
+  bootstrap-switch-rails
   browser-timezone-rails
   coffee-rails (~> 4.0.0)
   dalli

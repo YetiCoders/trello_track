@@ -4,6 +4,18 @@ window.App.Members =
 
   init: ->
     $("#tab_loader").show()
+    $("#followers").bootstrapSwitch()
+      .bootstrapSwitch("setSizeClass", "switch-large")
+      .bootstrapSwitch("setOnLabel", "Organization")
+      .bootstrapSwitch("setOffLabel", "Subscription")
+      .bootstrapSwitch("setOffClass", "followers")
+      .bootstrapSwitch("setOnClass", "organization")
+
+    $("#followers").on "switch-change", (e, data) ->
+      if data.value
+        $(".members_tabs li[follower='']").hide()
+      else
+        $(".members_tabs li").show()
 
     $(".members_tabs a").bind "ajax:complete", (event, request) ->
       $("#tab_loader").hide()

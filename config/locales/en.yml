@@ -89,6 +89,8 @@ en:
     cards:
       changed: Changed
       no_active_cards: No active cards
+    show:
+     back_to_main: Back To Organizations
 
   users:
     messages:

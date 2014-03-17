@@ -3,17 +3,13 @@ class MembersController < ApplicationController
   before_action :current_member, only: [:show, :activities, :cards]
 
   def show
+    @organization = trello_client.find(:organization, params[:organization_id])
+
     if request.xhr?
       render js: js_html("#tab_content", partial: "tab")
     else
-      @tab_members = []
+      @tab_members = @organization.members.sort_by(&:full_name)
       @followers = system_user.followers
-
-      @followers.each do |member_id|
-        @tab_members << fetch_member(member_id)
-      end
-
-      @tab_members.sort_by!(&:full_name)
     end
   end
 

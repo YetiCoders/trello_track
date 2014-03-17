@@ -1,17 +1,23 @@
 .page_member
+  .content_block.offset
+    .clearfix
+      .pull-left
+        %h3
+          .fa.fa-users
+          = @organization.display_name
+
+      .pull-right
+        = link_to t('.back_to_main'), main_url, class: "btn btn-primary"
+
+
   .content_block
     %ul.nav.nav-tabs.members_tabs
-      - unless @followers.include? @current_member.id
-        %li.active
-          = link_to member_path(@current_member.id), title: @current_member.full_name, id: "tab_#{@current_member.id}" do
-            = user_avatar(@current_member, :small)
-            = @current_member.full_name.split.first
 
-        %li.separator &nbsp;
+      %li.switcher= check_box_tag 'followers', 1
 
       - @tab_members.each do |member|
-        %li{ class: ("active" if member.id == @current_member.id) }
-          = link_to member_path(member.id), title: member.full_name, remote: true, id: "tab_#{member.id}" do
+        %li{ class: ("active" if member.id == @current_member.id), follower: (@followers.include?(member.id) ? "follower" : "") }
+          = link_to organization_member_path(@organization.id, member.id), title: member.full_name, remote: true, id: "tab_#{member.id}" do
             = user_avatar(member, :small)
             = member.full_name.split.first
 

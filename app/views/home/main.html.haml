@@ -33,4 +33,4 @@
                   = user_avatar(member, :medium)
 
                 .name
-                  = link_to member.full_name, member_path(member.id)
+                  = link_to member.full_name, organization_member_url(organization.id, member.id)

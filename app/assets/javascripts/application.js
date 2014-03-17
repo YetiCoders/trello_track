@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require bootstrap-switch
 //= require browser_timezone_rails/application
 //= require masonry.pkgd.min
 //= require global
