@@ -8,7 +8,7 @@ class MembersController < ApplicationController
     if request.xhr?
       render js: js_html("#tab_content", partial: "tab")
     else
-      @tab_members = @organization.members.sort_by(&:full_name)
+      @tab_members = @organization.members({ fields: ["fullName", "username", "avatarHash"] }).sort_by(&:full_name)
       @followers = system_user.followers
     end
   end
