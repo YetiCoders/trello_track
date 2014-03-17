@@ -5,7 +5,6 @@ window.App.Members =
   init: ->
     $("#tab_loader").show()
     $("#followers").bootstrapSwitch()
-      .bootstrapSwitch("setSizeClass", "switch-large")
       .bootstrapSwitch("setOnLabel", "<span class='fa fa-users'></span>")
       .bootstrapSwitch("setOffLabel", "<span class='fa fa-eye'></span>")
       .bootstrapSwitch("setOffClass", "followers")
