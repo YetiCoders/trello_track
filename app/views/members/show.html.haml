@@ -1,19 +1,17 @@
 .page_member
   .content_block.offset
-    .clearfix
-      .pull-left
-        %h3
-          .fa.fa-users
-          = @organization.display_name
+    %h3
+      = link_to main_url, title: t(".back_to_main"), class: "back_to_main_link" do
+        .fa.fa-arrow-left
 
-      .pull-right
-        = link_to t('.back_to_main'), main_url, class: "btn btn-primary"
-
+      .fa.fa-users
+      = @organization.display_name
 
   .content_block
     %ul.nav.nav-tabs.members_tabs
 
-      %li.switcher= check_box_tag 'followers', 1
+      %li.switcher{ title: t(".switcher_caption") }
+        = check_box_tag 'followers', 1
 
       - @tab_members.each do |member|
         %li{ class: ("active" if member.id == @current_member.id), follower: (@followers.include?(member.id) ? "follower" : "") }

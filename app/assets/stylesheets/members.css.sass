@@ -6,6 +6,10 @@
       size: 2em
     color: $color_light_gray
     padding: 20px 0
+  .back_to_main_link
+    text-decoration: none
+    margin:
+      right: 10px
   .members_tabs
     border:
       color: transparent
@@ -13,16 +17,17 @@
       margin:
         right: 10px
       &.switcher
+        background: $color_white
         display: block
-        padding:
+        margin:
           top: 5px
+        .switch-right
+          border-radius: 0 4px 4px 0
         .switch-followers
           background-color: #1d5575
           color: white
         .switch-organization
           background-color: #1d5575
-        .has-switch label
-          background-color: transparent
       &.separator
         display: block
         width: 4px

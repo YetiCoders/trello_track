@@ -90,7 +90,8 @@ en:
       changed: Changed
       no_active_cards: No active cards
     show:
-     back_to_main: Back To Organizations
+     back_to_main: Back to organizations
+     switcher_caption: Switch tabs between organization and following users
 
   users:
     messages:
