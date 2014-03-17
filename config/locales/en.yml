@@ -102,6 +102,6 @@ en:
 
   user_mailer:
     subjects:
-      follower_report: "%{user}: Activity Report"
+      follower_report: "%{user}: Trello Track Activity Report"
     follower_report:
       title: Activity Report

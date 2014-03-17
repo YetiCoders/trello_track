@@ -5,10 +5,10 @@ window.App.Members =
   init: ->
     $("#tab_loader").show()
     $("#followers").bootstrapSwitch()
-      .bootstrapSwitch("setOnLabel", "<span class='fa fa-users'></span>")
-      .bootstrapSwitch("setOffLabel", "<span class='fa fa-eye'></span>")
-      .bootstrapSwitch("setOffClass", "followers")
-      .bootstrapSwitch("setOnClass", "organization")
+      .bootstrapSwitch("setOnLabel", "<span class='fa fa-eye'></span>")
+      .bootstrapSwitch("setOffLabel", "<span class='fa fa-users'></span>")
+      .bootstrapSwitch("setOffClass", "organization")
+      .bootstrapSwitch("setOnClass", "followers")
 
     $("#followers").on "switch-change", (e, data) ->
       if data.value
