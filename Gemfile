@@ -16,7 +16,7 @@ gem 'haml'
 gem 'hpricot'  # need for premailer-rails
 gem 'premailer-rails'
 gem 'puma'
-gem 'ruby-trello', github: 'yeticoders/ruby-trello', branch: 'trello-track'
+gem 'ruby-trello', github: 'jeremytregunna/ruby-trello'
 gem 'sass-rails', '~> 4.0.0'
 gem 'sprockets', '2.11.0'
 gem 'therubyracer', platforms: :ruby
