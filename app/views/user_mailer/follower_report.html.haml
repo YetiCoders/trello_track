@@ -12,7 +12,7 @@
         = link_to "/", title: t("common.application_name"), style: "float: left" do
           = image_tag "/logo.png"
 
-        %h1{style: "text-align: right"}= t(".title")
+        %h1.title= t(".title")
 
       .member_info
         .avatar= user_avatar(@follower, :medium)
