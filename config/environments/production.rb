@@ -105,4 +105,5 @@ TrelloTrack::Application.configure do
       :sender_address => developers_emails.first,
       :exception_recipients => developers_emails
     }
+  ExceptionNotifier::Rake.configure
 end
