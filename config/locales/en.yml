@@ -10,6 +10,7 @@ en:
     sign_in: Sign in via Trello
     sign_out: Log out
     save: Save
+    developed_by: Developed by
     pages:
       main: Main page
       settings: Settings
