@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :user do
-    uid "MyString"
-    name "MyString"
+    uid { SecureRandom.uuid }
+    name { Faker::Name.name }
+    email { Faker::Internet.email }
   end
 end
