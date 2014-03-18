@@ -48,3 +48,117 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 end
 
+def login(user)
+  session[:user_id] = user.id
+  session[:token] = user.oauth_token
+end
+
+class TrelloSpecHelper
+  def self.member(user = nil)
+    user ||= FactoryGirl.create(:user)
+    {
+      "id" => user.uid,
+      "username" => user.name,
+      "email" => nil,
+      "full_name" => user.name,
+      "initials" => user.name[0],
+      "avatar_id" => "",
+      "bio" => ""
+    }.jsoned_into(Trello::Member)
+  end
+
+  def self.organization
+    display_name = Faker::Name.title
+    {
+      "id" => SecureRandom.uuid,
+      "name" => display_name.parameterize,
+      "display_name" => display_name,
+      "description" => Faker::Lorem.paragraph
+    }.jsoned_into(Trello::Organization)
+  end
+
+  def self.card(members, list = nil, board = nil)
+    name = Faker::Name.title
+    {
+      "id" => SecureRandom.uuid,
+      "short_id" => Faker::Number.number(2),
+      "name" => Faker::Name.title,
+      "desc" => Faker::Lorem.paragraph,
+      "due" => nil,
+      "closed" => false,
+      "url" => "https://trello.com/c/#{Faker::Lorem.word}/#{name.parameterize}",
+      "short_url" => "https://trello.com/c/#{Faker::Lorem.word}",
+      "idBoard" => board ? board.id : SecureRandom.uuid,
+      "idMembers" => members.map(&:id),
+      "idList" => list ? list.id : SecureRandom.uuid,
+      "pos" => nil,
+      "last_activity_date" => nil,
+      "badges" => {
+        "votes" => 0, "viewingMemberVoted" => false, "subscribed" => false, "fogbugz" => "", "checkItems" => 0,
+        "checkItemsChecked" => 0, "comments" => 0, "attachments" => 0, "description" => false, "due" => nil
+      },
+      "members" => members.map{|m| m.attributes}
+    }.jsoned_into(Trello::Card)
+  end
+
+  def self.action(member, action_type = "updateCard_moved")
+    action =
+      case action_type
+        when "updateCard_moved"
+          list_after_id = SecureRandom.uuid
+          list_after_before = SecureRandom.uuid
+          {
+            "id" => SecureRandom.uuid,
+            "type" => "updateCard",
+            "data" => {
+                "listAfter" => { "name" => Faker::Name.title, "id" => list_after_id },
+                "listBefore" => { "name" => Faker::Name.title, "id" => list_after_before },
+                "board" => { "name" => Faker::Name.title, "id" => SecureRandom.uuid },
+                "card" => {
+                  "name"=>"Nightly cron", "id" => SecureRandom.uuid,
+                  "idList" => list_after_id
+                },
+                "old" => { "idList" => list_after_before }
+            },
+            "date" => "2014-03-17T14:39:27.866Z",
+            "idMemberCreator" => member.id,
+            "memberCreator" => member.attributes
+          }
+        when "addMemberToBoard"
+          {
+            "id" => SecureRandom.uuid,
+            "idMemberCreator" => member.id,
+            "data" => {
+              "board" => { "name" => Faker::Name.title, "id" => SecureRandom.uuid },
+              "idMemberAdded" => SecureRandom.uuid,
+            },
+            "type" => "addMemberToBoard",
+            "date" => "2014-03-12T06:39:53.717Z",
+            "memberCreator" => member.attributes
+          }
+      end
+
+    action.jsoned_into(Trello::Action)
+  end
+
+  def self.list
+    {
+      "id" => SecureRandom.uuid,
+      "name" => Faker::Name.title,
+      "closed" => false,
+      "idBoard" => SecureRandom.uuid
+    }.jsoned_into(Trello::List)
+  end
+
+  def self.board
+    {
+      "id" => SecureRandom.uuid,
+      "name" => Faker::Name.title,
+      "desc" => Faker::Lorem.paragraph,
+      "closed" => false,
+      "idOrganization" => SecureRandom.uuid
+    }.jsoned_into(Trello::Board)
+  end
+end
+
+

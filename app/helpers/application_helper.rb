@@ -36,16 +36,21 @@ JS
   end
 
   def user_avatar(member, size = :small)
-     if member.avatar_id
-       image_tag member.avatar_url({ size: size })
-     else
-       image_tag "avatar_#{size}.png"
-     end
+    if member.avatar_id
+     image_tag member.avatar_url({ size: size })
+    else
+     image_tag "avatar_#{size}.png"
+    end
   end
 
+
   def fetch_member(member_id, force = false)
-    Rails.cache.fetch("member-#{member_id}", expires_in: 10.minutes, force: force) do
-      trello_client.find(:member, member_id)
+    begin
+      Rails.cache.fetch("member-#{member_id}", expires_in: 10.minutes, force: force) do
+        trello_client.find(:member, member_id)
+      end
+    rescue Trello::Error
+      nil
     end
   end
 end

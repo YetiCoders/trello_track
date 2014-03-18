@@ -1,9 +1,9 @@
 class MembersController < ApplicationController
-
   before_action :current_member, only: [:show, :activities, :cards]
 
   def show
-    @organization = trello_client.find(:organization, params[:organization_id])
+    @organization = @current_member.organizations.select{|org| org.id == params[:organization_id]}.first
+    redirect_to main_url and return if @organization.nil?
 
     if request.xhr?
       render js: js_html("#tab_content", partial: "tab")
@@ -46,13 +46,11 @@ class MembersController < ApplicationController
     threads = []
     for card in @cards
       unless @card_boards.has_key?(card.board_id)
-        @card_boards[card.board_id] = nil
         threads << Thread.new(card) do |card_to_fetch|
           @card_boards[card_to_fetch.board_id] = card_to_fetch.board
         end
       end
       unless @card_lists.has_key?(card.list_id)
-        @card_lists[card.list_id] = nil
         threads << Thread.new(card) do |card_to_fetch|
           @card_lists[card_to_fetch.list_id] = card_to_fetch.list
         end
@@ -77,6 +75,6 @@ class MembersController < ApplicationController
 
   def current_member
     @current_member ||= fetch_member(params[:id])
+    redirect_to main_url if @current_member.nil?
   end
-
 end
