@@ -7,8 +7,6 @@ class SessionsController < ApplicationController
     rescue NoMethodError
       return
     end
-
-    redirect_to root_url
   end
 
   def auth

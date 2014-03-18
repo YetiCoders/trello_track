@@ -161,4 +161,21 @@ class TrelloSpecHelper
   end
 end
 
+class RequestToken
+  def get_access_token(options = {})
+    return AccessToken.new
+  end
+end
 
+class AccessToken
+  def token
+    SecureRandom.uuid
+  end
+
+  def params
+    {
+      oauth_token: SecureRandom.uuid,
+      oauth_token_secret: SecureRandom.uuid
+    }
+  end
+end
