@@ -265,19 +265,10 @@ module MembersHelper
       end
 
       def updateCard(data)
-
-        if data[:data]["listAfter"]
-          updateCard_list_changed(data)
-        elsif data[:data]["card"].has_key? "closed"
-          updateCard_card_closed(data)
-        elsif data[:data]["old"] && data[:data]["old"].has_key?("pos")
-          updateCard_pos_changed(data)
-        else
-          {
-            card: data[:data]["card"]["name"],
-            type: :updated
-          }
-        end
+        return updateCard_list_changed(data) if data[:data]["listAfter"]
+        return updateCard_card_closed(data)  if data[:data]["card"].has_key? "closed"
+        return updateCard_pos_changed(data)  if data[:data]["old"] && data[:data]["old"].has_key?("pos")
+        return { card: data[:data]["card"]["name"], type: :updated }
       end
 
       def updateCheckItemStateOnCard(data)
