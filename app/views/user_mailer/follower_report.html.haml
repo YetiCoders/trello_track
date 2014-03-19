@@ -42,9 +42,9 @@
           .hint= t "members.cards.no_active_cards"
 
         - @cards.each do |card|
-          .card{ "data-trello-url" => card.url}
+          .card
             .card_inner
-              .name= card.name
+              .name=  link_to card.name, card.url, target: "_blank"
               .board_and_column
                 = @card_boards[card.board_id].name
                 \/
