@@ -307,23 +307,29 @@ module MembersHelper
       def updateMember(data);
       end
 
+      # support func
+      def updateOrganization_name(data)
+        {
+          organization: data[:data]["organization"]["name"],
+          type: data[:data]["old"].keys.first
+        }
+      end
+
+      # support func
+      def updateOrganization_website(data)
+        {
+          organization: data[:data]["organization"]["name"],
+          type: :set_website
+        }
+      end
+
       def updateOrganization(data)
-        if data[:data]["old"]
-          {
-            organization: data[:data]["organization"]["name"],
-            type: data[:data]["old"].keys.first
-          }
-        elsif data[:data]["organization"]["website"]
-          {
-            organization: data[:data]["organization"]["name"],
-            type: :set_website
-          }
-        else
-          {
-            organization: data[:data]["organization"]["name"],
-            type: :updated
-          }
-        end
+        return updateOrganization_name(data) if data[:data]["old"]
+        return updateOrganization_website(data) if data[:data]["organization"]["website"]
+        {
+          organization: data[:data]["organization"]["name"],
+          type: :updated
+        }
       end
     end
   end
