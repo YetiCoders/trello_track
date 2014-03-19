@@ -234,6 +234,7 @@ module MembersHelper
         end
       end
 
+      # support func
       def updateCard_list_changed(data)
         {
           card: data[:data]["card"]["name"],
@@ -243,6 +244,7 @@ module MembersHelper
         }
       end
 
+      # support func
       def updateCard_card_closed(data)
         {
           card: data[:data]["card"]["name"],
@@ -250,6 +252,7 @@ module MembersHelper
         }
       end
 
+      # support func
       def updateCard_pos_changed(data)
         if (data[:data]["old"]["pos"] > data[:data]["card"]["pos"])
           {
@@ -265,10 +268,11 @@ module MembersHelper
       end
 
       def updateCard(data)
-        return updateCard_list_changed(data) if data[:data]["listAfter"]
-        return updateCard_card_closed(data)  if data[:data]["card"].has_key? "closed"
-        return updateCard_pos_changed(data)  if data[:data]["old"] && data[:data]["old"].has_key?("pos")
-        return { card: data[:data]["card"]["name"], type: :updated }
+        card = data[:data]
+        return updateCard_list_changed(data) if card["listAfter"]
+        return updateCard_card_closed(data)  if card["card"]["closed"]
+        return updateCard_pos_changed(data)  if card["old"] && card["old"]["pos"]
+        { card: card["card"]["name"], type: :updated }
       end
 
       def updateCheckItemStateOnCard(data)
