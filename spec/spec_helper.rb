@@ -60,10 +60,9 @@ class TrelloSpecHelper
       "id" => user.uid,
       "username" => user.name,
       "email" => nil,
-      "full_name" => user.name,
+      "fullName" => user.name,
       "initials" => user.name[0],
-      "avatar_id" => "",
-      "bio" => ""
+      "avatarHash" => ""
     }.jsoned_into(Trello::Member)
   end
 
