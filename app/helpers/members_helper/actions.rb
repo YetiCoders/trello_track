@@ -270,8 +270,8 @@ module MembersHelper
       def updateCard(data)
         card = data[:data]
         return updateCard_list_changed(data) if card["listAfter"]
-        return updateCard_card_closed(data)  if card["card"]["closed"]
-        return updateCard_pos_changed(data)  if card["old"] && card["old"]["pos"]
+        return updateCard_card_closed(data)  if card["card"].has_key?("closed")
+        return updateCard_pos_changed(data)  if card["old"] && card["old"].has_key?("pos")
         { card: card["card"]["name"], type: :updated }
       end
 
