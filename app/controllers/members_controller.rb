@@ -36,22 +36,19 @@ class MembersController < ApplicationController
   end
 
   def cards
-    @cards = @current_member.cards members: true
+    @cards = @current_member.cards(members: true)
     @cards.sort_by!(&:last_activity_date).reverse!
+
     @card_boards = {}
     @card_lists = {}
 
-    threads = []
-    for card in @cards
-      threads << Thread.new(card) do |card_to_fetch|
-        @card_boards[card_to_fetch.board_id] = card_to_fetch.board
-      end unless @card_boards.has_key?(card.board_id)
+    @threads = []
 
-      threads << Thread.new(card) do |card_to_fetch|
-        @card_lists[card_to_fetch.list_id] = card_to_fetch.list
-      end unless @card_lists.has_key?(card.list_id)
+    @cards.each do |card|
+      fetch_card(card)
+      fetch_list(card)
     end
-    threads.each {|thr| thr.join }
+    @threads.each {|thr| thr.join }
 
     render js: js_html("#active_cards", partial: "cards")
   end
@@ -76,4 +73,19 @@ class MembersController < ApplicationController
   def organization
     @organization ||= @current_member.organizations.select{|org| org.id == params[:organization_id]}.first
   end
+
+  def fetch_card(card)
+    return if @card_boards.has_key?(card.board_id)
+    @threads << Thread.new(card) do |card_to_fetch|
+      @card_boards[card_to_fetch.board_id] = card_to_fetch.board
+    end
+  end
+
+  def fetch_list(card)
+    return if @card_lists.has_key?(card.list_id)
+    @threads << Thread.new(card) do |card_to_fetch|
+      @card_lists[card_to_fetch.list_id] = card_to_fetch.list
+    end
+  end
+
 end
