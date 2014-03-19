@@ -34,6 +34,9 @@ See [Live App](http://trello-track.herokuapp.com).
 
 If you want to use it in the production, please deploy app in your instance.
 
+
+[![Code Climate](https://codeclimate.com/github/YetiCoders/trello_track.png)](https://codeclimate.com/github/YetiCoders/trello_track)
+
 ## Authors
 
 Author of the idea: *Robert Graff*
