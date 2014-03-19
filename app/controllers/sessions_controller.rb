@@ -15,13 +15,8 @@ class SessionsController < ApplicationController
     _client.auth_policy.token = Trello::Authorization::OAuthCredential.new at.token, nil
 
     member = _client.find(:member, 'me')
-    user = User.find_or_initialize_by(uid: member.id)
-    user.name = member.username
-    user.oauth_token = at.params[:oauth_token]
-    user.oauth_token_secret = at.params[:oauth_token_secret]
-    user.time_zone = Time.zone.name
-
-    if user.save
+    user = User.create_user_by_oauth_info(member, at.params)
+    if user
       session[:user_id] = user.id
       session[:token] = user.oauth_token
     end
