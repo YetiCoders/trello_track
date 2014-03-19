@@ -1,9 +1,7 @@
 module MembersHelper
 
-  include MembersHelper::Actions
-
   def action_describe(action)
-    opts = Actions.send(action[:type], action)
+    opts = Actions.new(action).send(action[:type])
 
     if opts.present?
       t("members.activity.types.#{action[:type]}#{opts[:type] ? "_#{opts[:type]}" : ""}", wrap(opts))
