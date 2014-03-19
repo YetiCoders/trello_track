@@ -234,44 +234,44 @@ module MembersHelper
         end
       end
 
+      def updateCard_list_changed(data)
+        {
+          card: data[:data]["card"]["name"],
+          list_after: data[:data]["listAfter"]["name"],
+          list_before: data[:data]["listBefore"]["name"],
+          type: "moved"
+        }
+      end
+
+      def updateCard_card_closed(data)
+        {
+          card: data[:data]["card"]["name"],
+          type: data[:data]["card"]["closed"] == true ? "archived" : "unarchived"
+        }
+      end
+
+      def updateCard_pos_changed(data)
+        if (data[:data]["old"]["pos"] > data[:data]["card"]["pos"])
+          {
+            card: data[:data]["card"]["name"],
+            type:  :moved_up
+          }
+        else
+          {
+            card: data[:data]["card"]["name"],
+            type: :moved_down
+          }
+        end
+      end
+
       def updateCard(data)
 
-        def list_changed(data)
-          {
-            card: data[:data]["card"]["name"],
-            list_after: data[:data]["listAfter"]["name"],
-            list_before: data[:data]["listBefore"]["name"],
-            type: "moved"
-          }
-        end
-
-        def card_closed(data)
-          {
-            card: data[:data]["card"]["name"],
-            type: data[:data]["card"]["closed"] == true ? "archived" : "unarchived"
-          }
-        end
-
-        def pos_changed(data)
-          if (data[:data]["old"]["pos"] > data[:data]["card"]["pos"])
-            {
-              card: data[:data]["card"]["name"],
-              type:  :moved_up
-            }
-          else
-            {
-              card: data[:data]["card"]["name"],
-              type: :moved_down
-            }
-          end
-        end
-
         if data[:data]["listAfter"]
-          list_changed(data)
+          updateCard_list_changed(data)
         elsif data[:data]["card"].has_key? "closed"
-          card_closed(data)
+          updateCard_card_closed(data)
         elsif data[:data]["old"] && data[:data]["old"].has_key?("pos")
-          pos_changed(data)
+          updateCard_pos_changed(data)
         else
           {
             card: data[:data]["card"]["name"],
