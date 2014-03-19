@@ -206,7 +206,6 @@ describe HomeHelper do
         ]
       }
       all_actions.each do |type, tests|
-        p type
         [tests].flatten.each do |test|
           expected = test.delete(:expected)
           test[:type] = type

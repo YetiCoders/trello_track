@@ -62,7 +62,7 @@ class TrelloSpecHelper
       "email" => nil,
       "fullName" => user.name,
       "initials" => user.name[0],
-      "avatarHash" => ""
+      "avatarHash" => user.uid
     }.jsoned_into(Trello::Member)
   end
 
@@ -157,6 +157,17 @@ class TrelloSpecHelper
       "closed" => false,
       "idOrganization" => SecureRandom.uuid
     }.jsoned_into(Trello::Board)
+  end
+
+  def self.stub_find(members)
+    members = members.index_by(&:id)
+    Trello::Client.any_instance.stub(:find) do |who, id|
+      if members.has_key? id
+        members[id]
+      else
+        raise Trello::Error
+      end
+    end
   end
 end
 

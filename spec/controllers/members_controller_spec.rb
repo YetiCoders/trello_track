@@ -31,16 +31,12 @@ describe MembersController do
   context "with login" do
     before(:each) do
       @trello_user = TrelloSpecHelper.member(@user)
-      ApplicationController.any_instance.stub(:trello_user).and_return(@trello_user)
-
       @organizations = [ @organization, TrelloSpecHelper.organization ]
-      @members = [ @trello_user, TrelloSpecHelper.member, TrelloSpecHelper.member ].index_by(&:id)
-      MembersController.any_instance.stub(:fetch_member) do |id|
-        @members[id]
-      end
+      @members = [ @trello_user, TrelloSpecHelper.member, TrelloSpecHelper.member ]
+      TrelloSpecHelper.stub_find(@members)
 
       @trello_user.stub(:organizations).and_return(@organizations)
-      @organization.stub(:members).and_return(@members.values)
+      @organization.stub(:members).and_return(@members)
 
       login(@user)
     end
@@ -48,7 +44,7 @@ describe MembersController do
     it "show" do
       get :show, id: @user.uid, organization_id: @organization.id
       response.should be_success
-      expect(assigns[:tab_members]).to match_array(@members.values)
+      expect(assigns[:tab_members]).to match_array(@members)
       expect(assigns[:current_member]).to eq(@trello_user)
     end
 
@@ -68,7 +64,7 @@ describe MembersController do
     end
 
     it "cards" do
-      members = @members.values[0, 2]
+      members = @members[0, 2]
       board = TrelloSpecHelper.board
       list1 = TrelloSpecHelper.list
       list2 = TrelloSpecHelper.list
