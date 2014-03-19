@@ -80,8 +80,7 @@ describe MembersController do
       xhr :get, :cards, id: @user.uid
       response.should be_success
       expect(assigns[:cards]).to match_array([ card1, card2 ])
-      expect(assigns[:card_boards]).to eq({ board.id => board })
-      expect(assigns[:card_lists]).to eq({ list1.id => list1, list2.id => list2 })
+      expect(assigns[:ids]).to eq({ board.id => board, list1.id => list1, list2.id => list2 })
     end
 
     it "activities" do
