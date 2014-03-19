@@ -91,7 +91,7 @@ class TrelloSpecHelper
       "idMembers" => members.map(&:id),
       "idList" => list ? list.id : SecureRandom.uuid,
       "pos" => nil,
-      "last_activity_date" => nil,
+      "dateLastActivity" => "2014-03-17T14:39:27.866Z",
       "badges" => {
         "votes" => 0, "viewingMemberVoted" => false, "subscribed" => false, "fogbugz" => "", "checkItems" => 0,
         "checkItemsChecked" => 0, "comments" => 0, "attachments" => 0, "description" => false, "due" => nil
