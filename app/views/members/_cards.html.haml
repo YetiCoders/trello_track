@@ -7,9 +7,9 @@
       .card_inner
         .name= card.name
         .board_and_column
-          = @card_boards[card.board_id].name
+          = @ids[card.board_id].name
           \/
-          = @card_lists[card.list_id].name
+          = @ids[card.list_id].name
         .info.clearfix
           .pull-left.details
             - if card.badges["subscribed"]

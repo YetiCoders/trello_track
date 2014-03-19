@@ -39,14 +39,12 @@ class MembersController < ApplicationController
     @cards = @current_member.cards(members: true)
     @cards.sort_by!(&:last_activity_date).reverse!
 
-    @card_boards = {}
-    @card_lists = {}
-
+    @ids = {}
     @threads = []
 
     @cards.each do |card|
-      fetch_card(card)
-      fetch_list(card)
+      fetch_info(card, :board)
+      fetch_info(card, :list)
     end
     @threads.each {|thr| thr.join }
 
@@ -74,17 +72,11 @@ class MembersController < ApplicationController
     @organization ||= @current_member.organizations.select{|org| org.id == params[:organization_id]}.first
   end
 
-  def fetch_card(card)
-    return if @card_boards.has_key?(card.board_id)
+  def fetch_info(card, info)
+    id = card.send("#{info}_id")
+    return if @ids.has_key?(id)
     @threads << Thread.new(card) do |card_to_fetch|
-      @card_boards[card_to_fetch.board_id] = card_to_fetch.board
-    end
-  end
-
-  def fetch_list(card)
-    return if @card_lists.has_key?(card.list_id)
-    @threads << Thread.new(card) do |card_to_fetch|
-      @card_lists[card_to_fetch.list_id] = card_to_fetch.list
+      @ids[id] = card_to_fetch.send(info)
     end
   end
 
