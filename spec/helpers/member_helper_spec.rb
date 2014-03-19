@@ -214,12 +214,5 @@ describe HomeHelper do
       end
     end
 
-    it "without describe action in development env" do
-      Rails.env = "development"
-      expect(
-        helper.action_describe({ type: :updateMember, data: {"card" => { "name" => "Card 1" }}})
-      ).to eq("{:type=>:updateMember, :data=>{\"card\"=>{\"name\"=>\"Card 1\"}}}")
-      Rails.env = "test"
-    end
   end
 end
