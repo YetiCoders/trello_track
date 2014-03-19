@@ -1,6 +1,6 @@
 require 'trello'
 
-if Rails.env.development?
+if Rails.env.development? || Rails.env.test?
   module Trello
     class Client
       def invoke_verb_with_bench(*args)
