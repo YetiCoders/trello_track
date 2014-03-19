@@ -235,19 +235,24 @@ module MembersHelper
       end
 
       def updateCard(data)
-        if data[:data]["listAfter"]
+
+        def list_changed(data)
           {
             card: data[:data]["card"]["name"],
             list_after: data[:data]["listAfter"]["name"],
             list_before: data[:data]["listBefore"]["name"],
             type: "moved"
           }
-        elsif data[:data]["card"].has_key? "closed"
+        end
+
+        def card_closed(data)
           {
             card: data[:data]["card"]["name"],
             type: data[:data]["card"]["closed"] == true ? "archived" : "unarchived"
           }
-        elsif data[:data]["old"] && data[:data]["old"].has_key?("pos")
+        end
+
+        def pos_changed(data)
           if (data[:data]["old"]["pos"] > data[:data]["card"]["pos"])
             {
               card: data[:data]["card"]["name"],
@@ -259,6 +264,14 @@ module MembersHelper
               type: :moved_down
             }
           end
+        end
+
+        if data[:data]["listAfter"]
+          list_changed(data)
+        elsif data[:data]["card"].has_key? "closed"
+          card_closed(data)
+        elsif data[:data]["old"] && data[:data]["old"].has_key?("pos")
+          pos_changed(data)
         else
           {
             card: data[:data]["card"]["name"],
