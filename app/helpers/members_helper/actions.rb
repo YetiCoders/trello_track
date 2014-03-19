@@ -324,10 +324,11 @@ module MembersHelper
       end
 
       def updateOrganization(data)
-        return updateOrganization_name(data) if data[:data]["old"]
-        return updateOrganization_website(data) if data[:data]["organization"]["website"]
+        org = data[:data]
+        return updateOrganization_name(data) if org["old"]
+        return updateOrganization_website(data) if org["organization"]["website"]
         {
-          organization: data[:data]["organization"]["name"],
+          organization: org["organization"]["name"],
           type: :updated
         }
       end
