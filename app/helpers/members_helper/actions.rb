@@ -2,15 +2,30 @@ module MembersHelper
   class Actions
 
     def initialize(action)
-      @data = action[:data]
-      @participant = action[:member_participant]
+      @action = action
     end
 
-    attr_reader :data, :participant
+    attr_reader :action
+
+    def data
+      action[:data]
+    end
+
+    def card_name
+      data["card"]["name"]
+    end
+
+    def organization_name
+      data["organization"]["name"]
+    end
+
+    def participant
+      action[:member_participant]
+    end
 
     def addAttachmentToCard
       {
-        card: data["card"]["name"],
+        card: card_name,
         attachment: data["attachment"]["name"],
         attachment_url: data["attachment"]["url"],
       }
@@ -18,7 +33,7 @@ module MembersHelper
 
     def addChecklistToCard
       {
-        card: data["card"]["name"],
+        card: card_name,
         checklist: data["checklist"]["name"]
       }
     end
@@ -31,28 +46,28 @@ module MembersHelper
 
     def addMemberToCard
       {
-        card: data["card"]["name"],
+        card: card_name,
         user: participant["fullName"]
       }
     end
 
     def addMemberToOrganization
       {
-        organization: data["organization"]["name"],
+        organization: organization_name,
         user_id: data["idMemberAdded"]
       }
     end
 
     def addToOrganizationBoard
       {
-        organization: data["organization"]["name"],
+        organization: organization_name,
         board: data["board"]["name"]
       }
     end
 
     def commentCard
       {
-        card: data["card"]["name"],
+        card: card_name,
         comment: data["text"]
       }
     end
@@ -62,7 +77,7 @@ module MembersHelper
 
     def convertToCardFromCheckItem
       {
-        card: data["card"]["name"],
+        card: card_name,
         card_source: data["cardSource"]["name"]
       }
     end
@@ -82,14 +97,14 @@ module MembersHelper
 
     def createCard
       {
-        card: data["card"]["name"],
+        card: card_name,
         list: data["list"]["name"],
       }
     end
 
     def copyCard
       {
-        card: data["card"]["name"],
+        card: card_name,
         card_source: data["cardSource"]["name"],
         list: data["list"]["name"],
       }
@@ -103,13 +118,13 @@ module MembersHelper
 
     def createOrganization
       {
-        organization: data["organization"]["name"]
+        organization: organization_name
       }
     end
 
     def deleteAttachmentFromCard
       {
-        card: data["card"]["name"],
+        card: card_name,
         attachment: data["attachment"]["name"]
       }
     end
@@ -158,7 +173,7 @@ module MembersHelper
 
     def makeNormalMemberOfOrganization
       {
-        organization: data["organization"]["name"],
+        organization: organization_name,
         user: participant["fullName"]
       }
     end
@@ -171,7 +186,7 @@ module MembersHelper
 
     def moveCardFromBoard
       {
-        card: data["card"]["name"],
+        card: card_name,
         board_target: data["boardTarget"]["name"]
       }
     end
@@ -185,7 +200,7 @@ module MembersHelper
 
     def moveCardToBoard
       {
-        card: data["card"]["name"],
+        card: card_name,
         board_source: data["boardSource"]["name"]
       }
     end
@@ -205,7 +220,7 @@ module MembersHelper
 
     def removeChecklistFromCard
       {
-        card: data["card"]["name"],
+        card: card_name,
         checklist: data["checklist"]["name"]
       }
     end
@@ -215,7 +230,7 @@ module MembersHelper
 
     def removeMemberFromCard
       {
-        card: data["card"]["name"],
+        card: card_name,
         user: participant["fullName"]
       }
     end
@@ -243,7 +258,7 @@ module MembersHelper
     # support func
     def updateCard_list_changed
       {
-        card: data["card"]["name"],
+        card: card_name,
         list_after: data["listAfter"]["name"],
         list_before: data["listBefore"]["name"],
         type: "moved"
@@ -253,7 +268,7 @@ module MembersHelper
     # support func
     def updateCard_card_closed
       {
-        card: data["card"]["name"],
+        card: card_name,
         type: data["card"]["closed"] == true ? "archived" : "unarchived"
       }
     end
@@ -262,12 +277,12 @@ module MembersHelper
     def updateCard_pos_changed
       if (data["old"]["pos"] > data["card"]["pos"])
         {
-          card: data["card"]["name"],
+          card: card_name,
           type:  :moved_up
         }
       else
         {
-          card: data["card"]["name"],
+          card: card_name,
           type: :moved_down
         }
       end
@@ -283,7 +298,7 @@ module MembersHelper
 
     def updateCheckItemStateOnCard
       {
-        card: data["card"]["name"],
+        card: card_name,
         type: data["checkItem"]["state"],
         check_item: data["checkItem"]["name"]
       }
@@ -316,7 +331,7 @@ module MembersHelper
     # support func
     def updateOrganization_name
       {
-        organization: data["organization"]["name"],
+        organization: organization_name,
         type: data["old"].keys.first
       }
     end
@@ -324,7 +339,7 @@ module MembersHelper
     # support func
     def updateOrganization_website
       {
-        organization: data["organization"]["name"],
+        organization: organization_name,
         type: :set_website
       }
     end
@@ -333,7 +348,7 @@ module MembersHelper
       return updateOrganization_name if data["old"]
       return updateOrganization_website if data["organization"]["website"]
       {
-        organization: data["organization"]["name"],
+        organization: organization_name,
         type: :updated
       }
     end
