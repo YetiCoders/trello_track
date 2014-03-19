@@ -3,10 +3,11 @@ module MembersHelper
     class << self
 
       def addAttachmentToCard(data)
+        data = data[:data]
         {
-          card: data[:data]["card"]["name"],
-          attachment: data[:data]["attachment"]["name"],
-          attachment_url: data[:data]["attachment"]["url"],
+          card: data["card"]["name"],
+          attachment: data["attachment"]["name"],
+          attachment_url: data["attachment"]["url"],
         }
       end
 
