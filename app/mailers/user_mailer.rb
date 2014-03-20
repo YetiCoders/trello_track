@@ -21,4 +21,14 @@ class UserMailer < ActionMailer::Base
     subject = I18n.t('user_mailer.subjects.follower_report', { user: @follower.full_name })
     mail( to: email, subject: subject ).deliver
   end
+
+  def followers_report(email, options = {})
+    @members_info = options[:members_info]
+    @card_boards = options[:card_boards]
+    @card_lists = options[:card_lists]
+    @members = options[:members]
+
+    subject = I18n.t('user_mailer.subjects.followers_report')
+    mail( to: email, subject: subject ).deliver
+  end
 end

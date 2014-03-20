@@ -1,0 +1,18 @@
+%h4= t "members.tab.recent_activity"
+
+.activities
+  - if actions.blank?
+    .hint= t "members.activity.no_recent_activity"
+
+  - actions.map(&:attributes).each do |a|
+    .activity
+      %span.date
+        [
+        = a[:date].in_time_zone.strftime "%b %d at %H:%M"
+        - if a[:data]["board"]
+          = t("members.activity.on_board", board: a[:data]["board"]["name"])
+        -if a[:data]["organization"]
+          = t("members.activity.on_organization", organization: a[:data]["organization"]["name"])
+        ]
+      %span.text
+        = raw action_describe(a)

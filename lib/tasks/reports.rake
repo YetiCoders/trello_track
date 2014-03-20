@@ -10,36 +10,10 @@ namespace :reports do
       followers = user.followers
       next if followers.empty?
 
-      trello_client = TrelloWrapper::trello_client(user)
-
-      card_boards = {}
-      card_lists = {}
-      members =  {}
-
-      followers.each do |member_id|
-        members[member_id] = trello_client.find(:member, member_id) unless members.has_key?(member_id)
-        member = members[member_id]
-        next if member.nil?
-
-        #actions
-        actions = member.actions since: Date.yesterday.to_json, limit: 1000
-        actions.sort_by!(&:date).reverse!
-        actions.each do |action|
-          mid = action.data["idMemberAdded"]
-          next if mid.nil?
-          members[mid] = trello_client.find(:member, mid) unless members.has_key?(mid)
-        end
-
-        #cards
-        cards = member.cards members: true
-        cards.sort_by!(&:last_activity_date).reverse!
-        cards.each do |card|
-          card_boards[card.board_id] = card.board unless card_boards.has_key?(card.board_id)
-          card_lists[card.list_id] = card.list unless card_lists.has_key?(card.list_id)
-        end
-
-        options = { actions: actions, cards: cards, members: members, card_boards: card_boards, card_lists: card_lists }
-        UserMailer::follower_report(user.email, member, options)
+      if (user.settings || {})["report_type"] == "multi"
+        ActivityReport::Multi.new(user, followers).build_and_send
+      else
+        ActivityReport::Single.new(user, followers).build_and_send
       end
     end
   end

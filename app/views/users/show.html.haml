@@ -16,5 +16,15 @@
           = f.check_box :subscribed
           = f.label :subscribed
 
+        .report_types
+          .radio
+            = label_tag do
+              = f.radio_button "settings[report_type]", "single", { checked: ((system_user.settings || {})["report_type"] != "multi") }
+              = t(".report_type_single")
+          .radio
+            = label_tag do
+              = f.radio_button "settings[report_type]", "multi", { checked: ((system_user.settings || {})["report_type"] == "multi") }
+              = t(".report_type_multi")
+
         = f.submit t("common.save"),  class: "btn btn-default"
 

@@ -39,5 +39,5 @@ group :development, :test do
   gem 'shoulda-matchers'
 end
 
-#gem 'simplecov', :require => false, :group => :test
+gem 'simplecov', :require => false, :group => :test
 gem "codeclimate-test-reporter", group: :test, require: nil

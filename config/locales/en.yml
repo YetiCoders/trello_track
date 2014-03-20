@@ -100,9 +100,14 @@ en:
     show:
       title: Settings
       placeholder_email: E-mail
+      report_type_single: "One message about all followers"
+      report_type_multi: "Many messages: One message - one follower"
 
   user_mailer:
     subjects:
       follower_report: "%{user}: Trello Track Activity Report"
+      followers_report: "Trello Track Activity Report"
     follower_report:
+      title: Activity Report
+    followers_report:
       title: Activity Report

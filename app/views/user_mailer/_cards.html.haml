@@ -1,0 +1,46 @@
+%h4= t "members.tab.active_cards"
+.cards.clearfix
+  - if cards.blank?
+    .hint= t "members.cards.no_active_cards"
+
+  - cards.each do |card|
+    .card
+      .card_inner
+        .name=  link_to card.name, card.url, target: "_blank"
+        .board_and_column
+          = @card_boards[card.board_id].name
+          \/
+          = @card_lists[card.list_id].name
+        .info.clearfix
+          .pull-left.details
+            - if card.badges["subscribed"]
+              .detail.follow
+
+            - if card.badges["description"]
+              .detail.description
+
+            - if card.badges["comments"] > 0
+              .detail.comment
+                = card.badges["comments"]
+
+            - if card.badges["attachments"] > 0
+              .detail.attachment
+                = card.badges["attachments"]
+
+            - if card.badges["checkItems"] > 0
+              .detail.checklist{ class: (card.badges["checkItems"] == card.badges["checkItemsChecked"] ? "done" : "") }
+                = "#{card.badges["checkItemsChecked"]}/#{card.badges["checkItems"]}"
+
+            - if card.badges["due"]
+              .detail.due
+                .fa.fa-clock-o
+                = Time.parse(card.badges["due"]).in_time_zone.strftime "%b %d"
+
+          .pull-right.assigned_members
+            - card.card_members.each do |cm|
+              - cm = cm.jsoned_into(Trello::Member)
+              = user_avatar(cm, :small)
+
+        .date
+          = t("members.cards.changed")
+          = card.last_activity_date.in_time_zone.strftime "%b %d at %H:%M"

@@ -14,9 +14,10 @@
 
         %h1.title= t(".title")
 
-      .member_info
-        .avatar= user_avatar(@follower, :medium)
-        .name= @follower.full_name
+      - @members_info.each do |member_id, info|
+        .member_info
+          .avatar= user_avatar(@members[member_id], :medium)
+          .name= @members[member_id].full_name
 
-      = render "activities", actions: @actions
-      = render "cards", cards: @cards
+        = render "activities", actions: info[:actions]
+        = render "cards", cards: info[:cards]
