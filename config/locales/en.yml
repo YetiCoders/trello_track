@@ -3,7 +3,7 @@ en:
     attributes:
       user:
         email: E-mail
-        subscribed: Subscribe nightly Followers Report
+        subscribed: Subscribe nightly Followers Activity Report
 
   common:
     application_name: TrelloTrack
@@ -100,8 +100,8 @@ en:
     show:
       title: Settings
       placeholder_email: E-mail
-      report_type_single: "One message about all followers"
-      report_type_multi: "Many messages: One message - one follower"
+      report_type_single: "Single report"
+      report_type_multi: "Separate reports for each person"
 
   user_mailer:
     subjects:
