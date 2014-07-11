@@ -102,6 +102,11 @@ en:
       placeholder_email: E-mail
       report_type_single: "Single report"
       report_type_multi: "Separate reports for each person"
+      filter:
+        title: Include or exclude by filter
+        add_filter_condition: Add condition
+        include: Include
+        exclude: Exclude
 
   user_mailer:
     subjects:

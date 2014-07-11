@@ -5,8 +5,32 @@
     padding:
       bottom: 20px
       top: 20px
+    .setting_block
+      margin:
+        bottom: 40px
+
   .report_types
-    padding-left: 20px
-    font-size: 14px
     &.disabled
       color: $color_text_light
+
+  .add_filter_condition_block
+    margin:
+      top: 20px
+
+  .filter_conditions
+    margin:
+      top: 10px
+    .filter_condition
+      &.example
+        display: none
+      a
+        &:hover
+          text:
+            decoration: none
+        &.delete_filter_condition_link
+          color: red
+        .add_filter_condition_icon
+          color: green
+      input[type=text]
+        display: inline
+        width: 400px

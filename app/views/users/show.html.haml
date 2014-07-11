@@ -8,23 +8,59 @@
   .content_block.white_bg
     .settings
       = form_for system_user do |f|
-        .form-group
-          = f.label :email
-          = f.text_field :email, class: "form-control", placeholder: t('.placeholder_email')
+        .setting_block
+          .form-group
+            = f.label :email
+            = f.text_field :email, class: "form-control", placeholder: t('.placeholder_email')
 
-        .checkbox
-          = f.check_box :subscribed
-          = f.label :subscribed
+          .checkbox
+            = f.check_box :subscribed
+            = f.label :subscribed
 
-        .report_types
+          .report_types
+            .radio
+              = label_tag do
+                = f.radio_button "settings[report_type]", "single", { checked: ((system_user.settings || {})["report_type"] != "multi") }
+                = t(".report_type_single")
+
+            .radio
+              = label_tag do
+                = f.radio_button "settings[report_type]", "multi", { checked: ((system_user.settings || {})["report_type"] == "multi") }
+                = t(".report_type_multi")
+
+        .setting_block
+          %h4= t ".filter.title"
+
           .radio
             = label_tag do
-              = f.radio_button "settings[report_type]", "single", { checked: ((system_user.settings || {})["report_type"] != "multi") }
-              = t(".report_type_single")
+              = f.radio_button "settings[filter_condition]", "include", { checked: ((system_user.settings || {})["filter_condition"] == "include") }
+              = t(".filter.include")
+
           .radio
             = label_tag do
-              = f.radio_button "settings[report_type]", "multi", { checked: ((system_user.settings || {})["report_type"] == "multi") }
-              = t(".report_type_multi")
+              = f.radio_button "settings[filter_condition]", "exclude", { checked: ((system_user.settings || {})["filter_condition"] == "exclude") }
+              = t(".filter.exclude")
 
-        = f.submit t("common.save"),  class: "btn btn-default"
+          .add_filter_condition_block
+            = link_to "javascript:void(0);", class: "add_filter_condition_link" do
+              = icon "plus", {}, class: "add_filter_condition_icon"
+              = t ".filter.add_filter_condition"
+
+          .filter_conditions
+            .filter_condition.example
+              .form-group
+                = link_to "javascript:void(0);", class: "delete_filter_condition_link" do
+                  = icon "times"
+                = text_field_tag "user[settings[filter_conditions]][]", nil, class: "form-control"
+
+            - if (system_user.settings || {})["filter_conditions"]
+              - (system_user.settings || {})["filter_conditions"].each do |condition|
+                .filter_condition
+                  .form-group
+                    = link_to "javascript:void(0);", class: "delete_filter_condition_link" do
+                      = icon "times"
+                    = text_field_tag "user[settings[filter_conditions]][]", condition, class: "form-control"
+
+        .actions
+          = f.submit t("common.save"), class: "btn btn-primary"
 
