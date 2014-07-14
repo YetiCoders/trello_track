@@ -48,6 +48,9 @@ class MembersController < ApplicationController
     end
     @threads.each {|thr| thr.join }
 
+    # user filter
+    @cards = CardsFilter.apply_user_filter(@system_user, @cards, @ids)
+
     render js: js_html("#active_cards", partial: "cards")
   end
 

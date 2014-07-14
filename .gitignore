@@ -22,3 +22,6 @@
 /tmp
 
 .DS_Store
+
+# rubymune files
+/.idea

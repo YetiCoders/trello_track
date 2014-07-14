@@ -29,7 +29,7 @@ describe UsersController do
 
     it "update - success" do
       post :update, { user: { email: "janev@example.com", subscribed: "1" } }
-      response.should be_success
+      response.should redirect_to user_url
       @user.reload
       expect(@user.email).to eq("janev@example.com")
       expect(@user.subscribed).to be_true
@@ -37,7 +37,7 @@ describe UsersController do
       expect(flash[:success]).not_to be_empty
 
       post :update, {user: { email: "", subscribed: "0"}}
-      response.should be_success
+      response.should redirect_to user_url
       @user.reload
       expect(@user.email).to eq("")
       expect(@user.subscribed).to be_false

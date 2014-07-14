@@ -41,6 +41,8 @@ module ActivityReport
         board_by_id(card.board_id)
         list_by_id(card.list_id)
       end
+
+      ::CardsFilter.apply_user_filter(recipient, cards, lists)
     end
   end
 
