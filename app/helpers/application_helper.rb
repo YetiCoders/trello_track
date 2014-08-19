@@ -42,4 +42,9 @@ JS
      image_tag "avatar_#{size}.png"
     end
   end
+
+  def link_to_card(shortLink)
+    "https://trello.com/c/" << shortLink if shortLink
+  end
+
 end
