@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
   def system_user
-    @system_user ||= User.where(id: session[:user_id], oauth_token: session[:token]).try(:first)
+    @system_user ||= User.find_by(id: session[:user_id], oauth_token: session[:token])
   end
 
   def authenticate
