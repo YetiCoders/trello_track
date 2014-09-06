@@ -41,6 +41,7 @@ class MembersController < ApplicationController
 
     @ids = {}
     @threads = []
+    @semaph = Mutex.new
 
     @cards.each do |card|
       fetch_info(card, :board)
@@ -77,9 +78,13 @@ class MembersController < ApplicationController
 
   def fetch_info(card, info)
     id = card.send("#{info}_id")
-    return if @ids.has_key?(id)
+    @semaph.synchronize {
+      return if @ids.has_key?(id)
+      @ids[id] = nil
+    }
     @threads << Thread.new(card) do |card_to_fetch|
-      @ids[id] = card_to_fetch.send(info)
+      data = card_to_fetch.send(info)
+      @semaph.synchronize { @ids[id] = data }
     end
   end
 
