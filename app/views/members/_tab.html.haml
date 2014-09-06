@@ -21,6 +21,6 @@
 
 :javascript
   $(function(){
-    window.App.Members.get_cards("#{cards_member_url(@current_member.id)}");
-    window.App.Members.get_activity("#{activities_member_url(@current_member.id)}");
+    window.App.Members.get_cards("#{cards_organization_member_url(organization.id, @current_member.id)}");
+    window.App.Members.get_activity("#{activities_organization_member_url(organization.id, @current_member.id)}");
   });

@@ -72,7 +72,7 @@ class TrelloSpecHelper
   def self.organization
     display_name = Faker::Name.title
     {
-      "id" => SecureRandom.uuid,
+      "id" => SecureRandom.uuid.gsub(/-/,''),
       "name" => display_name.parameterize,
       "display_name" => display_name,
       "description" => Faker::Lorem.paragraph
@@ -145,7 +145,7 @@ class TrelloSpecHelper
 
   def self.list
     {
-      "id" => SecureRandom.uuid,
+      "id" => SecureRandom.uuid.gsub(/-/,''),
       "name" => Faker::Name.title,
       "closed" => false,
       "idBoard" => SecureRandom.uuid
@@ -154,7 +154,7 @@ class TrelloSpecHelper
 
   def self.board
     {
-      "id" => SecureRandom.uuid,
+      "id" => SecureRandom.uuid.gsub(/-/,''),
       "name" => Faker::Name.title,
       "desc" => Faker::Lorem.paragraph,
       "closed" => false,

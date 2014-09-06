@@ -13,12 +13,12 @@ describe MembersController do
     end
 
     it "activities" do
-      get :activities, id: @user.uid
+      get :activities, id: @user.uid, organization_id: @organization.id
       response.should redirect_to root_url
     end
 
     it "cards" do
-      get :cards, id: @user.uid
+      get :cards, id: @user.uid, organization_id: @organization.id
       response.should redirect_to root_url
     end
 
@@ -37,6 +37,15 @@ describe MembersController do
 
       @trello_user.stub(:organizations).and_return(@organizations)
       @organization.stub(:members).and_return(@members)
+      mems = @members[0, 2]
+      @board = TrelloSpecHelper.board
+      @list1 = TrelloSpecHelper.list
+      @list2 = TrelloSpecHelper.list
+      @card1 = TrelloSpecHelper.card([ mems[0], mems[1] ], @list1, @board)
+      @card2 = TrelloSpecHelper.card([ mems[0] ], @list2, @board)
+      @organization.stub(:boards).and_return([@board])
+      @boards = [ @board ]
+      Trello::Action.stub(:search).and_return("cards" => [@card1, @card2])
 
       login(@user)
     end
@@ -64,23 +73,15 @@ describe MembersController do
     end
 
     it "cards" do
-      members = @members[0, 2]
-      board = TrelloSpecHelper.board
-      list1 = TrelloSpecHelper.list
-      list2 = TrelloSpecHelper.list
-      card1 = TrelloSpecHelper.card([ members[0], members[1] ], list1, board)
-      card2 = TrelloSpecHelper.card([ members[0] ], list2, board)
+      @card1.stub(:board).and_return(@board)
+      @card1.stub(:list).and_return(@list1)
+      @card2.stub(:board).and_return(@board)
+      @card2.stub(:list).and_return(@list2)
 
-      @trello_user.stub(:cards).and_return([ card1, card2 ])
-      card1.stub(:board).and_return(board)
-      card1.stub(:list).and_return(list1)
-      card2.stub(:board).and_return(board)
-      card2.stub(:list).and_return(list2)
-
-      xhr :get, :cards, id: @user.uid
+      xhr :get, :cards, id: @user.uid, organization_id: @organization.id
       response.should be_success
-      expect(assigns[:cards]).to match_array([ card1, card2 ])
-      expect(assigns[:ids]).to eq({ board.id => board, list1.id => list1, list2.id => list2 })
+      expect(assigns[:cards]).to match_array([ @card1, @card2 ])
+      expect(assigns[:ids]).to eq({ @board.id => @board, @list1.id => @list1, @list2.id => @list2 })
     end
 
     it "activities" do
@@ -88,7 +89,7 @@ describe MembersController do
       action2 = TrelloSpecHelper.action(@trello_user, "addMemberToBoard")
       @trello_user.stub(:actions).and_return( [ action1, action2 ])
 
-      xhr :get, :activities, id: @user.uid
+      xhr :get, :activities, id: @user.uid, organization_id: @organization.id
       response.should be_success
       expect(assigns[:actions]).to match_array([ action1, action2 ])
     end

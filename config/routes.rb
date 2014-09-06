@@ -62,13 +62,16 @@ TrelloTrack::Application.routes.draw do
   get :main, to: "home#main"
 
   resources :organizations, only: [] do
-    resources :members, only: [:show]
+    resources :members, only: [:show] do
+      member do
+        get  :activities
+        get  :cards
+      end
+    end
   end
 
   resources :members, only: [:update] do
     member do
-      get  :activities
-      get  :cards
       post :follow
     end
   end

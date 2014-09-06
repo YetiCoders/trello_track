@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
-    uid { SecureRandom.uuid }
+    uid { SecureRandom.uuid.gsub(/-/,'') }
     name { Faker::Name.name }
     email { Faker::Internet.email }
     oauth_token { SecureRandom.hex(10) }
