@@ -5,7 +5,7 @@ module ActivityReport
 
     def initialize(recipient, followers)
       @recipient = recipient
-      @trello_client = TrelloWrapper::trello_client(recipient)
+      @trello_client = Trello::Client.new(Trello.configuration.credentials)
       @followers = followers
       @members = {}
       @lists = {}
