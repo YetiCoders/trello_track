@@ -1,3 +1,5 @@
+require 'multiuser_action'
+
 class MembersController < ApplicationController
   before_action :current_member, except: [:follow]
   helper_method :organization
