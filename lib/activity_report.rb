@@ -5,11 +5,21 @@ module ActivityReport
 
     def initialize(recipient, followers)
       @recipient = recipient
+      trello_configure!
       @trello_client = Trello::Client.new(Trello.configuration.credentials)
       @followers = followers
       @members = {}
       @lists = {}
       @boards = {}
+    end
+
+    def trello_configure!
+      Trello.configure do |config|
+        config.consumer_key = ENV['CONSUMER_KEY']
+        config.consumer_secret = ENV['CONSUMER_SECRET']
+        config.oauth_token = recipient.oauth_token
+        config.oauth_token_secret = recipient.oauth_token_secret
+      end
     end
 
     def member_by_id(member_id)

@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :trello_client, :trello_user, :system_user
   before_filter :authenticate
+  before_filter :trello_configure!
 
   include ApplicationHelper
 
@@ -14,17 +15,20 @@ class ApplicationController < ActionController::Base
     @trello_user ||= fetch_member(system_user.uid)
   end
 
+  def trello_configure!
+    # FIXME I think it is variant configure for multi-user model
+    return unless system_user
+    Trello.configure do |config|
+      config.consumer_key = ENV['CONSUMER_KEY']
+      config.consumer_secret = ENV['CONSUMER_SECRET']
+      config.oauth_token = system_user.oauth_token
+      config.oauth_token_secret = system_user.oauth_token_secret
+    end
+  end
+
   def trello_client
     return unless system_user
-    @trello_client ||= begin
-      Trello.configure do |config|
-        config.consumer_key = ENV['CONSUMER_KEY']
-        config.consumer_secret = ENV['CONSUMER_SECRET']
-        config.oauth_token = system_user.oauth_token
-        config.oauth_token_secret = system_user.oauth_token_secret
-      end
-      Trello::Client.new(Trello.configuration.credentials)
-    end
+    @trello_client ||= Trello::Client.new(Trello.configuration.credentials)
   end
 
   def system_user
