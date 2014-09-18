@@ -45,7 +45,7 @@ describe MembersController do
       @card2 = TrelloSpecHelper.card([ mems[0] ], @list2, @board)
       @organization.stub(:boards).and_return([@board])
       @boards = [ @board ]
-      Trello::Action.stub(:search).and_return("cards" => [@card1, @card2])
+      MultiuserAction.any_instance.stub(:search).and_return("cards" => [@card1, @card2])
 
       login(@user)
     end

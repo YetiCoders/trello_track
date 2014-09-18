@@ -86,7 +86,7 @@ class MembersController < ApplicationController
   end
 
   def search_cards_by_string(str)
-    @cards = Trello::Action.search("#{str} is:open",
+    @cards = MultiuserAction.new(system_user).search("#{str} is:open",
           modelTypes: :cards,
           idBoards: boards.map(&:id),
           cards_limit: 1000, # TODO get all
@@ -123,6 +123,7 @@ class MembersController < ApplicationController
       @ids[id] = nil
     }
     @threads << Thread.new(card) do |card_to_fetch|
+      card_to_fetch.client = trello_client
       data = card_to_fetch.send(info)
       @semaph.synchronize { @ids[id] = data }
     end
