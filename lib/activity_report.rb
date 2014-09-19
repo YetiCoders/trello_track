@@ -5,7 +5,6 @@ module ActivityReport
 
     def initialize(recipient, followers)
       @recipient = recipient
-      trello_configure!
       @followers = followers
       @members = {}
       @lists = {}
