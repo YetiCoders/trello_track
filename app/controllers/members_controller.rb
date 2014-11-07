@@ -16,10 +16,12 @@ class MembersController < ApplicationController
   end
 
   def activities
+    @cards = search_cards_by_comments(@current_member)
+    @cards.sort_by!(&:last_activity_date).reverse!
+    @cards = filter_cards(@cards)
+
     @members = {}
-
     @actions = @current_member.actions since: Date.yesterday.to_json, limit: 1000
-
     threads = []
     for action in @actions
       # if idMember exists there is member hash
@@ -42,20 +44,7 @@ class MembersController < ApplicationController
     @cards = search_cards_by_member(@current_member)
     @cards.sort_by!(&:last_activity_date).reverse!
 
-    @ids = {}
-    @threads = []
-    @semaph = Mutex.new
-
-    # for simultaneously getting info
-    @cards.each do |card|
-      # TODO cache it
-      fetch_info(card, :board)
-      fetch_info(card, :list)
-    end
-    @threads.each {|thr| thr.join }
-
-    # TODO do not fetch list info if excluded
-    @cards = CardsFilter.apply_user_filter(@system_user, @cards, @ids)
+    @cards = filter_cards(@cards)
 
     render js: js_html("#active_cards", partial: "cards")
   end
@@ -87,6 +76,23 @@ class MembersController < ApplicationController
     @boards ||= organization.boards
   end
 
+  def filter_cards(cards)
+    @ids = {}
+    @threads = []
+    @semaph = Mutex.new
+
+    # for simultaneously getting info
+    cards.each do |card|
+      # TODO cache it
+      fetch_info(card, :board)
+      fetch_info(card, :list)
+    end
+    @threads.each {|thr| thr.join }
+
+    # TODO do not fetch list info if excluded
+    CardsFilter.apply_user_filter(@system_user, cards, @ids)
+  end
+
   def search_cards_by_string(str)
     @cards = MultiuserAction.new(system_user).search("#{str} is:open",
           modelTypes: :cards,
@@ -97,21 +103,28 @@ class MembersController < ApplicationController
         )["cards"]
   end
 
-  def search_cards_by_member(member)
+  def search_cards_by_comments(member)
     mutex = Mutex.new
     threads = []
     cards = []
-    # TODO DRY
-    threads << Thread.new(member) do |mem|
-      result = search_cards_by_string("@#{member.username}").to_a
-      mutex.synchronize { cards.concat result }
-    end
     threads << Thread.new(member) do |mem|
       result = search_cards_by_string("comment:@#{member.username}").to_a
       mutex.synchronize { cards.concat result }
     end
     threads << Thread.new(member) do |mem|
-      result = search_cards_by_string("comment:@#{member.full_name}").to_a
+      result = search_cards_by_string("comment:#{member.full_name}").to_a
+      mutex.synchronize { cards.concat result }
+    end
+    threads.each {|thr| thr.join }
+    cards.uniq(&:id)
+  end
+
+  def search_cards_by_member(member)
+    mutex = Mutex.new
+    threads = []
+    cards = []
+    threads << Thread.new(member) do |mem|
+      result = search_cards_by_string("@#{member.username}").to_a
       mutex.synchronize { cards.concat result }
     end
     threads.each {|thr| thr.join }
