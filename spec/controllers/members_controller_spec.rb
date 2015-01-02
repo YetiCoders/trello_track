@@ -88,6 +88,7 @@ describe MembersController do
       action1 = TrelloSpecHelper.action(@trello_user)
       action2 = TrelloSpecHelper.action(@trello_user, "addMemberToBoard")
       @trello_user.stub(:actions).and_return( [ action1, action2 ])
+      controller.stub_chain(:boards, :map).and_return([action1.data["board"]["id"], action2.data["board"]["id"]])
 
       xhr :get, :activities, id: @user.uid, organization_id: @organization.id
       response.should be_success

@@ -16,12 +16,20 @@ class MembersController < ApplicationController
   end
 
   def activities
-    @cards = search_cards_by_comments(@current_member)
-    @cards.sort_by!(&:last_activity_date).reverse!
-    @cards = filter_cards(@cards)
 
+    @actions = []
     @members = {}
+
+    # search in member actions since yesterday
     @actions = @current_member.actions since: Date.yesterday.to_json, limit: 1000
+    @actions = @actions.select{|a| boards.map(&:id).include? a.data["board"]["id"] }
+
+    # search in comments
+    @actions_by_comments = search_actions_by_member_in_comments(@current_member)
+    @actions.push *@actions_by_comments
+    @actions.uniq!(&:id)
+    @actions.sort_by!(&:date).reverse!
+
     threads = []
     for action in @actions
       # if idMember exists there is member hash
@@ -29,7 +37,6 @@ class MembersController < ApplicationController
       member_id = action.data["idMemberAdded"]
       next if member_id.nil? || @members.has_key?(member_id)
 
-      # TODO use mutex too
       @members[member_id] = nil
       threads << Thread.new(member_id) do |fetch_id|
         @members[fetch_id] = fetch_member(fetch_id)
@@ -94,40 +101,58 @@ class MembersController < ApplicationController
   end
 
   def search_cards_by_string(str)
-    @cards = MultiuserAction.new(system_user).search("#{str} is:open",
-          modelTypes: :cards,
-          idBoards: boards.map(&:id),
-          cards_limit: 1000, # TODO get all
-          card_members: true,
-          card_fields: [:name, :badges, :idBoard, :idList, :idMembers, :dateLastActivity, :url],
-        )["cards"]
+    MultiuserAction.new(system_user).search("#{str} is:open",
+      modelTypes: :cards,
+      idBoards: boards.map(&:id),
+      cards_limit: 1000, # TODO get all
+      card_members: true,
+      card_fields: [:name, :badges, :idBoard, :idList, :idMembers, :dateLastActivity, :url],
+    )["cards"]
   end
 
-  def search_cards_by_comments(member)
+  def search_cards_by_string_in_comments(str)
+    MultiuserAction.new(system_user).
+      search("comment:#{str} is:open",
+        modelTypes: :cards,
+        idBoards: boards.map(&:id),
+        cards_limit: 1000, # TODO get all
+        card_fields: [:id, :dateLastActivity]
+      )["cards"].select{|c| c.last_activity_date > Date.yesterday}
+  end
+
+  def search_card_actions_by_string_in_comments(cards, strings)
+    selected_actions = []
+    cards.each do |card|
+      card.client = trello_client
+      actions = card.actions(since: Date.yesterday.to_json, filter: :commentCard, member: true)
+      selected_actions.push *actions.select do |a|
+        strings.any?{|str| a.data["text"].include?(str)}
+      end
+    end
+    selected_actions.uniq(&:id)
+  end
+
+  def search_actions_by_member_in_comments(member)
     mutex = Mutex.new
     threads = []
     cards = []
-    threads << Thread.new(member) do |mem|
-      result = search_cards_by_string("comment:@#{member.username}").to_a
-      mutex.synchronize { cards.concat result }
-    end
-    threads << Thread.new(member) do |mem|
-      result = search_cards_by_string("comment:#{member.full_name}").to_a
-      mutex.synchronize { cards.concat result }
+
+    user_search = ["@" + member.username, member.full_name]
+
+    user_search.each do |str|
+      threads << Thread.new(member) do |mem|
+        result = search_cards_by_string_in_comments(str).to_a
+        mutex.synchronize { cards.concat result }
+      end
     end
     threads.each {|thr| thr.join }
-    cards.uniq(&:id)
+
+    cards.uniq!(&:id)
+    search_card_actions_by_string_in_comments(cards, user_search)
   end
 
   def search_cards_by_member(member)
-    mutex = Mutex.new
-    threads = []
-    cards = []
-    threads << Thread.new(member) do |mem|
-      result = search_cards_by_string("@#{member.username}").to_a
-      mutex.synchronize { cards.concat result }
-    end
-    threads.each {|thr| thr.join }
+    cards = search_cards_by_string("@#{member.username}").to_a
     cards.uniq(&:id)
   end
 
